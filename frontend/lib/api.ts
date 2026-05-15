@@ -1,4 +1,5 @@
 const API_URL = process.env.NEXT_PUBLIC_API_URL || "http://localhost:8000";
+const API_KEY = process.env.NEXT_PUBLIC_API_KEY || "my-super-secret-key-2024";
 
 export interface Source {
   id: number;
@@ -19,13 +20,16 @@ export interface QueryResponse {
 export async function querySalary(query: string): Promise<QueryResponse> {
   const response = await fetch(`${API_URL}/api/v1/query`, {
     method: "POST",
-    headers: { "Content-Type": "application/json" },
+    headers: {
+      "Content-Type": "application/json",
+      "X-API-Key": API_KEY,
+    },
     body: JSON.stringify({ query }),
   });
 
   if (!response.ok) {
     const error = await response.json();
-    throw new Error(error.detail || "שגיאה בשרת");
+    throw new Error(error.detail || "Server error");
   }
 
   return response.json();
