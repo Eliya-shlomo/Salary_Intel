@@ -1,10 +1,11 @@
-from fastapi import APIRouter, HTTPException, Request
+from fastapi import APIRouter, HTTPException, Request, Depends
 from pydantic import BaseModel
 from app.rag.generator import answer_salary_query
 from app.ingestion.ingestor import ingest_post
 from app.core.exceptions import SalaryIntelError
 from app.core.logging import get_logger
 from app.core.rate_limiter import limiter
+from app.core.security import verify_api_key
 
 logger = get_logger(__name__)
 router = APIRouter()
@@ -31,8 +32,12 @@ class IngestRequest(BaseModel):
 
 
 @router.post("/query", response_model=QueryResponse)
-@limiter.limit("3/minute")  # ← מקסימום 10 שאלות בדקה לכל IP
-def query_salary(request: Request, body: QueryRequest):
+@limiter.limit("10/minute")
+def query_salary(
+    request: Request,
+    body: QueryRequest,
+    api_key: str = Depends(verify_api_key)  
+):
     if not body.query.strip():
         raise HTTPException(status_code=400, detail="שאלה ריקה")
 
@@ -50,8 +55,12 @@ def query_salary(request: Request, body: QueryRequest):
 
 
 @router.post("/ingest")
-@limiter.limit("5/minute")  # ← ingestion מוגבל יותר
-def ingest_new_post(request: Request, body: IngestRequest):
+@limiter.limit("5/minute")
+def ingest_new_post(
+    request: Request,
+    body: IngestRequest,
+    api_key: str = Depends(verify_api_key)  # ← חדש
+):
     try:
         post = ingest_post(**body.model_dump())
         return {"id": post.id, "message": "נשמר בהצלחה"}
@@ -67,7 +76,10 @@ def ingest_new_post(request: Request, body: IngestRequest):
 
 @router.get("/stats")
 @limiter.limit("30/minute")
-def get_stats(request: Request):
+def get_stats(
+    request: Request,
+    api_key: str = Depends(verify_api_key)  # ← חדש
+):
     try:
         from app.db.database import SessionLocal
         from app.db.models import SalaryPost
