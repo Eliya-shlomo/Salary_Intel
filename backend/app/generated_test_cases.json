@@ -1,0 +1,702 @@
+[
+  {
+    "query": "מה השכר הממוצע למפתח פיתוח פרונטאנד עם 4 שנות ניסיון בתל אביב?",
+    "relevant_ids": [
+      1
+    ],
+    "source_post": {
+      "id": 1,
+      "role": "Frontend Developer",
+      "years_experience": 4.0,
+      "salary": 28000.0,
+      "location": "תל אביב",
+      "raw_text": "היי כולם, מפתח React עם 4 שנות ניסיון. עובד בסטארטאפ סדרה B בתל אביב. קיבלתי הצעה של 28K. נשמע הגיוני?"
+    }
+  },
+  {
+    "query": "מה השכר הממוצע ל-DevOps עם 6 שנות ניסיון בחברות פיננסיות בישראל?",
+    "relevant_ids": [
+      2
+    ],
+    "source_post": {
+      "id": 2,
+      "role": "DevOps",
+      "years_experience": 6.0,
+      "salary": 42000.0,
+      "location": "מרכז",
+      "raw_text": "עדכון שכר לקהילה: DevOps עם 6 שנים, חברה פיננסית גדולה, מרכז. 42K + בונוס שנתי. שוק מאוד חזק כרגע."
+    }
+  },
+  {
+    "query": "מה השכר הממוצע לראש צוות עם 8 שנות ניסיון בתל אביב?",
+    "relevant_ids": [
+      3
+    ],
+    "source_post": {
+      "id": 3,
+      "role": "Team Lead",
+      "years_experience": 8.0,
+      "salary": 55000.0,
+      "location": "תל אביב",
+      "raw_text": "Team Lead בחברת פינטק, 8 שנות ניסיון, 3 שנים ניהול. מקבל 55K כולל רכב. תל אביב."
+    }
+  },
+  {
+    "query": "מהו המשכורת הממוצעת לנתוני מדען עם שנה וחצי ניסיון בתל אביב?",
+    "relevant_ids": [
+      4
+    ],
+    "source_post": {
+      "id": 4,
+      "role": "Data Scientist",
+      "years_experience": 1.5,
+      "salary": 22000.0,
+      "location": "תל אביב",
+      "raw_text": "Data Scientist ג׳וניור, שנה וחצי ניסיון, חברת SaaS. מציעים לי 22K. זה בסדר לג׳וניור?"
+    }
+  },
+  {
+    "query": "מה השכר הממוצע למתכנת Backend עם 5 שנות ניסיון ברמת גן?",
+    "relevant_ids": [
+      5
+    ],
+    "source_post": {
+      "id": 5,
+      "role": "Backend Developer",
+      "years_experience": 5.0,
+      "salary": 34000.0,
+      "location": "רמת גן",
+      "raw_text": "Backend Python, 5 שנים, חברת אינטרנט בינונית, רמת גן. 34K. עוברים ל-FastAPI, מאוד מרוצה מהסביבה."
+    }
+  },
+  {
+    "query": "מה השכר הממוצע למפתחי מובייל עם שנתיים ניסיון בפתח תקווה?",
+    "relevant_ids": [
+      8
+    ],
+    "source_post": {
+      "id": 8,
+      "role": "Mobile Developer",
+      "years_experience": 2.0,
+      "salary": 20000.0,
+      "location": "פתח תקווה",
+      "raw_text": "שלום לכולם, אני מפתחת Mobile בפתח תקווה, עם שנתיים ניסיון. מציעים לי 20K. זה שוק טוב או שאני מפספסת משהו?"
+    }
+  },
+  {
+    "query": "האם שכר של 30K ל-QA Engineer עם שנתיים ניסיון בתל אביב נחשב לגבוה?",
+    "relevant_ids": [
+      12
+    ],
+    "source_post": {
+      "id": 12,
+      "role": "QA Engineer",
+      "years_experience": 2.0,
+      "salary": 30000.0,
+      "location": "תל אביב",
+      "raw_text": "מה קורה חברים? אני עובד כ-QA Engineer בחברה בתל אביב. עליתי ל-30K אחרי שנתיים, אבל אני שוקל לעזוב. זה שכר טוב?"
+    }
+  },
+  {
+    "query": "מה השכר הראוי ל-Data Engineer עם 3 שנות ניסיון באזור רעננה?",
+    "relevant_ids": [
+      13
+    ],
+    "source_post": {
+      "id": 13,
+      "role": "Data Engineer",
+      "years_experience": 3.0,
+      "salary": 38000.0,
+      "location": "רעננה",
+      "raw_text": "שבוע מעולה! אני Data Engineer עם 3 שנים ניסיון. מציעים לי 38K בחברה ברעננה. זה הגיוני או שאני יכול לדרוש יותר?"
+    }
+  },
+  {
+    "query": "מה השכר הממוצע למפתח Backend עם שנתיים ניסיון בחיפה?",
+    "relevant_ids": [
+      15
+    ],
+    "source_post": {
+      "id": 15,
+      "role": "Backend Developer",
+      "years_experience": 2.0,
+      "salary": 32000.0,
+      "location": "חיפה",
+      "raw_text": "מה דעתכם על השכר של 32K ל-Backend Developer עם שנתיים ניסיון בחיפה? זה בסדר או שאני צריך לדרוש יותר?"
+    }
+  },
+  {
+    "query": "מה הטווח השכר למפתחי Frontend עם שנתיים ניסיון בתל אביב?",
+    "relevant_ids": [
+      16
+    ],
+    "source_post": {
+      "id": 16,
+      "role": "Frontend Developer",
+      "years_experience": 2.0,
+      "salary": 22000.0,
+      "location": "תל אביב",
+      "raw_text": "היי חברים, מחפש עבודה כמפתח Frontend בתל אביב, אני עם שנתיים ניסיון. קיבלתי הצעה ל-22K. זה הגיוני? איזה טווח שכר יש היום?"
+    }
+  },
+  {
+    "query": "מה השכר הממוצע לתפקיד Team Lead עם 5 שנות ניסיון בהרצליה?",
+    "relevant_ids": [
+      19
+    ],
+    "source_post": {
+      "id": 19,
+      "role": "Team Lead",
+      "years_experience": 5.0,
+      "salary": 55000.0,
+      "location": "הרצליה",
+      "raw_text": "עדכון! קיבלתי הצעה ל-Team Lead בהרצליה עם שכר של 55K. יש לי 5 שנים ניסיון, מה דעתכם? האם זה שכר בשוק?"
+    }
+  },
+  {
+    "query": "מה השכר הממוצע ל-QA Engineer עם 4 שנות ניסיון בתל אביב?",
+    "relevant_ids": [
+      20
+    ],
+    "source_post": {
+      "id": 20,
+      "role": "QA Engineer",
+      "years_experience": 4.0,
+      "salary": 28000.0,
+      "location": "תל אביב",
+      "raw_text": "שלום לכולם, אני QA Engineer עם 4 שנים ניסיון בתל אביב. נתקעתי עם הצעה על 28K, חברים, מה אתם אומרים? זה מה שיש היום?"
+    }
+  },
+  {
+    "query": "מהו השכר הממוצע ל-Data Scientist עם 3 שנות ניסיון בבאר שבע?",
+    "relevant_ids": [
+      23
+    ],
+    "source_post": {
+      "id": 23,
+      "role": "Data Scientist",
+      "years_experience": 3.0,
+      "salary": 38000.0,
+      "location": "באר שבע",
+      "raw_text": "רוצה לשאול, אני Data Scientist עם 3 שנים ניסיון, קיבלתי הצעה ל-38K באר שבע. זה טווח מקובל? מה קורה בשוק?"
+    }
+  },
+  {
+    "query": "מה השכר הממוצע ל-DevOps Engineer עם 3 שנות ניסיון ברעננה?",
+    "relevant_ids": [
+      24
+    ],
+    "source_post": {
+      "id": 24,
+      "role": "DevOps Engineer",
+      "years_experience": 3.0,
+      "salary": 40000.0,
+      "location": "רעננה",
+      "raw_text": "שיתוף: אני עובד כ-DevOps Engineer ברעננה, עם 3 שנים ניסיון. קיבלתי שדרוג לשכר של 40K. זה מעניין אתכם?"
+    }
+  },
+  {
+    "query": "מה השכר הממוצע לעובד QA עם שנה ניסיון באזור הרצליה?",
+    "relevant_ids": [
+      33
+    ],
+    "source_post": {
+      "id": 33,
+      "role": "QA Engineer",
+      "years_experience": 1.0,
+      "salary": 20000.0,
+      "location": "הרצליה",
+      "raw_text": "שאלת תפקיד: יש לי הצעה ל-QA Engineer בסטארטאפ בהרצליה ב-20K. איך זה נשמע? אני עם שנה ניסיון."
+    }
+  },
+  {
+    "query": "מה השכר הממוצע למפתח Backend עם 4 שנות ניסיון בירושלים?",
+    "relevant_ids": [
+      38
+    ],
+    "source_post": {
+      "id": 38,
+      "role": "Backend Developer",
+      "years_experience": 4.0,
+      "salary": 37000.0,
+      "location": "ירושלים",
+      "raw_text": "היי, אני בשיחה עם חברה בירושלים שמציעים לי 37K כ-Backend Developer עם 4 שנות ניסיון. זה נראה לכם טוב?"
+    }
+  },
+  {
+    "query": "מה הסכום הממוצע שמקבלים אנשי סייבר עם 5 שנות ניסיון באזור רעננה?",
+    "relevant_ids": [
+      39
+    ],
+    "source_post": {
+      "id": 39,
+      "role": "Cyber Security Specialist",
+      "years_experience": 5.0,
+      "salary": 45000.0,
+      "location": "רעננה",
+      "raw_text": "רציתי לשאול, מה השכר ל-Cyber Security Specialist עם 5 שנות ניסיון ברעננה? יש לי הצעה של 45K ואני לא בטוח אם זה טוב."
+    }
+  },
+  {
+    "query": "מה השכר הממוצע למפתח פולסטאק עם 3 שנות ניסיון בתל אביב?",
+    "relevant_ids": [
+      41
+    ],
+    "source_post": {
+      "id": 41,
+      "role": "Fullstack Developer",
+      "years_experience": 3.0,
+      "salary": 30000.0,
+      "location": "תל אביב",
+      "raw_text": "היי חברים, אני מתל אביב ומחפש משרה כ-Fullstack Developer בחברת סטארטאפ. יש לי 3 שנים ניסיון. קיבלתי הצעה ל-30K. זה בסדר או שצריך לדרוש יותר?"
+    }
+  },
+  {
+    "query": "מה השכר הנפוץ למהנדס ML עם שנתיים ניסיון באזור רמת גן?",
+    "relevant_ids": [
+      42
+    ],
+    "source_post": {
+      "id": 42,
+      "role": "ML Engineer",
+      "years_experience": 2.0,
+      "salary": 42000.0,
+      "location": "רמת גן",
+      "raw_text": "מישהו יכול לשתף מה השכר הממוצע ל-ML Engineer ברמת גן? אני שנתיים בתחום, קיבלתי הצעה ל-42K, זה סביר?"
+    }
+  },
+  {
+    "query": "מה השכר הממוצע ל-Data Engineer עם 4 שנות ניסיון בירושלים?",
+    "relevant_ids": [
+      43
+    ],
+    "source_post": {
+      "id": 43,
+      "role": "Data Engineer",
+      "years_experience": 4.0,
+      "salary": 38000.0,
+      "location": "ירושלים",
+      "raw_text": "שואלת בשביל חברה, מה השכר ל-Data Engineer בירושלים עם 4 שנות ניסיון? שואלים על 38K. אני חושבת שזה גבוה מידי, מה אתם אומרים?"
+    }
+  },
+  {
+    "query": "מה השכר הממוצע ל- Cyber Security Analyst עם 5 שנות ניסיון בבאר שבע?",
+    "relevant_ids": [
+      44
+    ],
+    "source_post": {
+      "id": 44,
+      "role": "Cyber Security Analyst",
+      "years_experience": 5.0,
+      "salary": 50000.0,
+      "location": "באר שבע",
+      "raw_text": "היי! אני Cyber Security Analyst עם 5 שנים ניסיון, קיבלתי הצעה מסטארטאפ בבאר שבע על 50K. מה דעתכם? אני מתלבטת אם לקחת את זה."
+    }
+  },
+  {
+    "query": "מה השכר הממוצע ל-Team Lead עם 7 שנות ניסיון בתל אביב?",
+    "relevant_ids": [
+      45
+    ],
+    "source_post": {
+      "id": 45,
+      "role": "Team Lead",
+      "years_experience": 7.0,
+      "salary": 65000.0,
+      "location": "תל אביב",
+      "raw_text": "שלום לכולם, אני Team Lead עם 7 שנים ניסיון, מחפש עבודה חדשה בהייטק. קיבלתי הצעה מ-Enterprise בתל אביב על 65K. זה טוב או שאני יכול לבקש יותר?"
+    }
+  },
+  {
+    "query": "מה השכר הממוצע למפתח Mobile עם שנתיים ניסיון באזור רעננה?",
+    "relevant_ids": [
+      46
+    ],
+    "source_post": {
+      "id": 46,
+      "role": "Mobile Developer",
+      "years_experience": 2.0,
+      "salary": 27000.0,
+      "location": "רעננה",
+      "raw_text": "אני מפתח Mobile עם שנתיים ניסיון, קיבלתי הצעה ל-27K ברעננה. זה טוב? לא בטוח אם זה שוק טוב."
+    }
+  },
+  {
+    "query": "מה השכר הממוצע לדאטה סיינטיסט עם שנתיים ניסיון באזור חיפה?",
+    "relevant_ids": [
+      47
+    ],
+    "source_post": {
+      "id": 47,
+      "role": "Data Scientist",
+      "years_experience": 2.0,
+      "salary": 48000.0,
+      "location": "חיפה",
+      "raw_text": "עדכון קטן, אני Data Scientist בחיפה, קיבלתי חיזוק לשכר ל-48K לאחר שנתיים. עכשיו נשאר לי לחשוב על קידום. מה השלב הבא בעיניכם?"
+    }
+  },
+  {
+    "query": "מהו השכר הממוצע ל-DevOps Engineer עם שלוש שנות ניסיון ברמת גן?",
+    "relevant_ids": [
+      48
+    ],
+    "source_post": {
+      "id": 48,
+      "role": "DevOps Engineer",
+      "years_experience": 3.0,
+      "salary": 39000.0,
+      "location": "רמת גן",
+      "raw_text": "מישהו יודע מה המצב בשוק ל-DevOps Engineer ברמת גן? אני עם 3 שנים ניסיון והציעו לי 39K. זה נראה לי בסדר."
+    }
+  },
+  {
+    "query": "מה השכר הממוצע ל- Solution Architect עם 6 שנות ניסיון בחיפה?",
+    "relevant_ids": [
+      49
+    ],
+    "source_post": {
+      "id": 49,
+      "role": "Solution Architect",
+      "years_experience": 6.0,
+      "salary": 55000.0,
+      "location": "חיפה",
+      "raw_text": "רוצה לשתף, אני Solution Architect עם 6 שנים ניסיון, קיבלתי הצעה מסטארטאפ בחיפה על 55K. זה נשמע טוב? מחפש דיון על השכר בשוק."
+    }
+  },
+  {
+    "query": "מהו השכר הממוצע למפתח Frontend עם שנתיים ניסיון בתל אביב?",
+    "relevant_ids": [
+      50
+    ],
+    "source_post": {
+      "id": 50,
+      "role": "Frontend Developer",
+      "years_experience": 2.0,
+      "salary": 23000.0,
+      "location": "תל אביב",
+      "raw_text": "היי חברים, אני עובד בתור Frontend Developer בסטארטאפ בתל אביב עם 2 שנות ניסיון. מבקש לדעת מה דעתכם על שכר של 23K? זה נחשב בסדר?"
+    }
+  },
+  {
+    "query": "מה השכר הנפוץ למנהל צוות עם שנתיים ניסיון בתעשיית ההייטק בירושלים?",
+    "relevant_ids": [
+      52
+    ],
+    "source_post": {
+      "id": 52,
+      "role": "Team Lead",
+      "years_experience": 2.0,
+      "salary": 55000.0,
+      "location": "ירושלים",
+      "raw_text": "רוצה לשתף את הקהילה, אני Team Lead בחברה גדולה בירושלים. אחרי שנתיים קיבלתי העלאה ל-55K, מרגיש שמעריכים אותי סוף סוף!"
+    }
+  },
+  {
+    "query": "מה הסכום שמקובל לבקש בתור مهندس נתונים עם שלוש שנות ניסיון?",
+    "relevant_ids": [
+      53
+    ],
+    "source_post": {
+      "id": 53,
+      "role": "Data Engineer",
+      "years_experience": 3.0,
+      "salary": 30000.0,
+      "location": "רעננה",
+      "raw_text": "מישהו כאן עובד בתור Data Engineer? אני ברעננה עם 3 שנות ניסיון והציעו לי 30K. זה טוב? שווה לנסות לדרוש יותר?"
+    }
+  },
+  {
+    "query": "מה השכר הממוצע למתכנתי מובייל עם 4 שנות ניסיון בפתח תקווה?",
+    "relevant_ids": [
+      54
+    ],
+    "source_post": {
+      "id": 54,
+      "role": "Mobile Developer",
+      "years_experience": 4.0,
+      "salary": 27000.0,
+      "location": "פתח תקווה",
+      "raw_text": "שאלה למתכנתים! אני Mobile Developer עם 4 שנות ניסיון, בפתח תקווה. השכר שלי עומד על 27K. איך זה נראה בשוק?"
+    }
+  },
+  {
+    "query": "מה השכר הממוצע ל-Cloud Engineer עם 5 שנות ניסיון בחיפה?",
+    "relevant_ids": [
+      57
+    ],
+    "source_post": {
+      "id": 57,
+      "role": "Cloud Engineer",
+      "years_experience": 5.0,
+      "salary": 45000.0,
+      "location": "חיפה",
+      "raw_text": "שאלה, אני Cloud Engineer עם 5 שנות ניסיון. מישהו יודע אם 45K זה שכר סביר בחיפה? מרגיש קצת לא בטוח."
+    }
+  },
+  {
+    "query": "מה הסכום ההוגן עבור מפתח Backend עם 3 שנות ניסיון בהרצליה?",
+    "relevant_ids": [
+      61
+    ],
+    "source_post": {
+      "id": 61,
+      "role": "Backend Developer",
+      "years_experience": 3.0,
+      "salary": 30000.0,
+      "location": "הרצליה",
+      "raw_text": "מה קורה חברים? אני Mid Backend Developer בהרצליה, עם 3 שנים ניסיון. קיבלתי הצעה ל-30K. זה הוגן?"
+    }
+  },
+  {
+    "query": "מה השכר הממוצע ל-data engineer עם 4 שנות ניסיון בירושלים?",
+    "relevant_ids": [
+      64
+    ],
+    "source_post": {
+      "id": 64,
+      "role": "Data Engineer",
+      "years_experience": 4.0,
+      "salary": 38000.0,
+      "location": "ירושלים",
+      "raw_text": "שלום לכולם! אני Data Engineer בירושלים, עם 4 שנים ניסיון. השכר שלי 38K, הייתי רוצה לדעת אם זה בסדר או שצריך לדרוש יותר?"
+    }
+  },
+  {
+    "query": "מה השכר הממוצע למהנדס ML עם שנה ניסיון באזור נתניה?",
+    "relevant_ids": [
+      65
+    ],
+    "source_post": {
+      "id": 65,
+      "role": "ML Engineer",
+      "years_experience": 1.0,
+      "salary": 25000.0,
+      "location": "נתניה",
+      "raw_text": "שאלה לכולם! אני ML Engineer במשרד קטן בנתניה, עם שנה ניסיון. הציעו לי 25K, זה סבבה בשביל התחלה?"
+    }
+  },
+  {
+    "query": "מה הסכום הממוצע שFrontend Developer עם 3 שנים ניסיון יכול לצפות לקבל בתל אביב?",
+    "relevant_ids": [
+      67
+    ],
+    "source_post": {
+      "id": 67,
+      "role": "Frontend Developer",
+      "years_experience": 3.0,
+      "salary": 30000.0,
+      "location": "תל אביב",
+      "raw_text": "היי כולם! אני עובד כ-Frontend Developer בסטארטאפ בתל אביב, עם 3 שנים ניסיון. קיבלתי הצעה ל-30K, מה דעתכם? זה בסדר או שאני יכול לדרוש יותר?"
+    }
+  },
+  {
+    "query": "מה השכר הסטנדרטי למפתח מובייל עם שנתיים ניסיון ברמת גן?",
+    "relevant_ids": [
+      68
+    ],
+    "source_post": {
+      "id": 68,
+      "role": "Mobile Developer",
+      "years_experience": 2.0,
+      "salary": 28000.0,
+      "location": "רמת גן",
+      "raw_text": "מישהו פה יודע מה השכר של Mobile Developer ברמת גן? אני עם שנתיים ניסיון ורוצה לדעת אם 28K זה הוגן או לא."
+    }
+  },
+  {
+    "query": "מה השכר הממוצע למהנדסי דאטה עם 4 שנים ניסיון בפתח תקווה?",
+    "relevant_ids": [
+      70
+    ],
+    "source_post": {
+      "id": 70,
+      "role": "Data Engineer",
+      "years_experience": 4.0,
+      "salary": 32000.0,
+      "location": "פתח תקווה",
+      "raw_text": "היי חברים! אני עובד כ-Data Engineer עם 4 שנים ניסיון. קיבלתי הצעה מ-Startup בפתח תקווה ל-32K. זה בסדר או שאני יכול לדרוש יותר?"
+    }
+  },
+  {
+    "query": "מה השכר שצריך לצפות לו כמפתח מובייל עם 3 שנות ניסיון בחיפה?",
+    "relevant_ids": [
+      71
+    ],
+    "source_post": {
+      "id": 71,
+      "role": "Mobile Developer",
+      "years_experience": 3.0,
+      "salary": 25000.0,
+      "location": "חיפה",
+      "raw_text": "מה קורה? אני רוצה לעבור ל-Mobile Developer. אני עם 3 שנים ניסיון, מה השכר הממוצע כיום בחיפה? האם 25K זה ריאלי?"
+    }
+  },
+  {
+    "query": "מהו השכר המקובל ל-SRE עם 7 שנות ניסיון באזור הרצליה?",
+    "relevant_ids": [
+      73
+    ],
+    "source_post": {
+      "id": 73,
+      "role": "SRE",
+      "years_experience": 7.0,
+      "salary": 55000.0,
+      "location": "הרצליה",
+      "raw_text": "היי! אני מתעניין במשרות כ-SRE עם 7 שנים ניסיון. יש לי הצעה ל-55K בהרצליה. זה נשמע טוב או שצריך לנסות לדחוף יותר?"
+    }
+  },
+  {
+    "query": "מה השכר הסביר למפתח Backend עם שנה ניסיון בתל אביב?",
+    "relevant_ids": [
+      74
+    ],
+    "source_post": {
+      "id": 74,
+      "role": "Backend Developer",
+      "years_experience": 1.0,
+      "salary": 28000.0,
+      "location": "תל אביב",
+      "raw_text": "היי חברים, אני מתראיין ל-Backend Developer בחברה סטארטאפ בתל אביב. הציעו לי 28K, זה נראה לכם סביר? יש לי שנה וחצי ניסיון, מה דעתכם?"
+    }
+  },
+  {
+    "query": "מה השכר הממוצע ל-Data Scientist עם 3 שנות ניסיון בארץ?",
+    "relevant_ids": [
+      76
+    ],
+    "source_post": {
+      "id": 76,
+      "role": "Data Scientist",
+      "years_experience": 3.0,
+      "salary": 38000.0,
+      "location": "פתח תקווה",
+      "raw_text": "אני Data Scientist עם 3 שנים ניסיון, מקבל 38K בחברה בפתח תקווה. איך זה בהשוואה לשאר? מישהו פה מרוויח יותר?"
+    }
+  },
+  {
+    "query": "מה השכר הממוצע למנהל צוות עם 5 שנות ניסיון בהרצליה?",
+    "relevant_ids": [
+      77
+    ],
+    "source_post": {
+      "id": 77,
+      "role": "Team Lead",
+      "years_experience": 5.0,
+      "salary": 52000.0,
+      "location": "הרצליה",
+      "raw_text": "היי, אני Team Lead ב-Startup בהרצליה, השכר שלי 52K. זה טוב? יש לי 5 שנים ניסיון אבל אני מתלבט אם לבקש יותר."
+    }
+  },
+  {
+    "query": "מה השכר הממוצע למנהל מוצר עם 4 שנות ניסיון בתל אביב?",
+    "relevant_ids": [
+      80
+    ],
+    "source_post": {
+      "id": 80,
+      "role": "Product Manager",
+      "years_experience": 4.0,
+      "salary": 42000.0,
+      "location": "תל אביב",
+      "raw_text": "היי, אני Product Manager עם 4 שנים ניסיון בתל אביב, מרוויח 42K. זה נראה לכם הגיוני? מה השוק מציע היום?"
+    }
+  },
+  {
+    "query": "מה השכר הממוצע לסטודנט או בעל ניסיון מועט בתחום מדע הנתונים בישראל?",
+    "relevant_ids": [
+      81
+    ],
+    "source_post": {
+      "id": 81,
+      "role": "Data Scientist",
+      "years_experience": 0.0,
+      "salary": 38000.0,
+      "location": "הרצליה",
+      "raw_text": "רוצה לשתף את הקהילה שאני מתחיל לעבוד כ-Data Scientist בחברה בהרצליה עם שכר של 38K. זהו תפקיד ראשון שלי בתחום ואני ממש מת excited! יש המלצות איך להוציא את המקסימום מהתפקיד?"
+    }
+  },
+  {
+    "query": "מה השכר הממוצע למהנדס DevOps עם חמש שנות ניסיון באזור חיפה?",
+    "relevant_ids": [
+      82
+    ],
+    "source_post": {
+      "id": 82,
+      "role": "DevOps Engineer",
+      "years_experience": 5.0,
+      "salary": 55000.0,
+      "location": "חיפה",
+      "raw_text": "היי חברים, אני Senior DevOps Engineer עם 5 שנים ניסיון, קיבלתי הצעה מ-Enterprise בחיפה לשכר של 55K. זה סבבה או שאפשר לדרוש יותר?"
+    }
+  },
+  {
+    "query": "מה השכר הממוצע למפתחי מובייל עם שנתיים ניסיון באזור פתח תקווה?",
+    "relevant_ids": [
+      83
+    ],
+    "source_post": {
+      "id": 83,
+      "role": "Mobile Developer",
+      "years_experience": 2.0,
+      "salary": 20000.0,
+      "location": "פתח תקווה",
+      "raw_text": "מישהו יודע מה השכר הממוצע ל-Mobile Developer בפתח תקווה? אני בשנה השנייה שלי בתפקיד ומקבל 20K. שווה לבקש העלאה?"
+    }
+  },
+  {
+    "query": "האם השכר של 23K ל-Data Engineer עם אפס שנות ניסיון הוא הוגן?",
+    "relevant_ids": [
+      84
+    ],
+    "source_post": {
+      "id": 84,
+      "role": "Data Engineer",
+      "years_experience": 0.0,
+      "salary": 23000.0,
+      "location": "רעננה",
+      "raw_text": "רק סיימתי תואר ואני מקבל הצעות ל-Data Engineer באיזור רעננה, השכר שמציעים הוא סביב 23K. זה פייר או שכדאי לחכות למשהו טוב יותר?"
+    }
+  },
+  {
+    "query": "מהו השכר הממוצע להנדסת מכונה עם שנה וחצי ניסיון בירושלים?",
+    "relevant_ids": [
+      85
+    ],
+    "source_post": {
+      "id": 85,
+      "role": "ML Engineer",
+      "years_experience": 1.5,
+      "salary": 45000.0,
+      "location": "ירושלים",
+      "raw_text": "שאלה לקולגות ה-ML Engineers, האם 45K זה שכר סביר על עבודה בצוות של סטארטאפ בירושלים עם שנה וחצי ניסיון? יש לי עוד הצעה מסטארטאפ אחר בנתניה."
+    }
+  },
+  {
+    "query": "מה השכר הממוצע ל-Team Lead עם 3 שנות ניסיון ברמת גן?",
+    "relevant_ids": [
+      88
+    ],
+    "source_post": {
+      "id": 88,
+      "role": "Team Lead",
+      "years_experience": 3.0,
+      "salary": 50000.0,
+      "location": "רמת גן",
+      "raw_text": "יש לי שיחה עם חברה ברמת גן שמחפשת Team Lead עם ניסיון של 3 שנים. השכר שמציעים הוא 50K. זה נורמלי או שאני צריך לדרוש יותר?"
+    }
+  },
+  {
+    "query": "שכר של 32K ל-Data Engineer עם 3 שנות ניסיון בהרצליה זה בסדר?",
+    "relevant_ids": [
+      89
+    ],
+    "source_post": {
+      "id": 89,
+      "role": "Data Engineer",
+      "years_experience": 3.0,
+      "salary": 32000.0,
+      "location": "הרצליה",
+      "raw_text": "שלום לכולם! אני Data Engineer עם 3 שנות ניסיון, קיבלתי הצעה מסטארטאפ בהרצליה על 32K. זה שכר טוב להייטק ב-2024?"
+    }
+  }
+]

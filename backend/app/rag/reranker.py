@@ -18,11 +18,12 @@ async def rerank_results(query: str, posts: list[dict], top_k: int = 3) -> list[
     if len(posts) <= 2:
         return posts[:top_k]
 
-    posts_text = "\n\n".join([
-        f"Post {i+1}:\n"
-        f"Role: {p['role']} | Experience: {p['years_experience']} years | "
-        f"Salary: {p['salary']}₪\n"
-        f"Content: {p['raw_text']}"
+    # Build structured posts text
+    posts_text = "\n".join([
+        f"Post {i+1}: Role: {p['role']} | "
+        f"Salary: {p['salary']}₪ | "
+        f"Experience: {p['years_experience']} years | "
+        f"Location: {p['location']}"
         for i, p in enumerate(posts)
     ])
 
@@ -32,21 +33,11 @@ async def rerank_results(query: str, posts: list[dict], top_k: int = 3) -> list[
             messages=[
                 {
                     "role": "system",
-                    "content": """You are an expert on the Israeli tech job market.
-Rank the posts by relevance to the salary question.
-
-Return ONLY a JSON array of post numbers from most to least relevant.
-Example: [2, 1, 3]
-
-Ranking criteria (by importance):
-1. Role match — is the post about the same role?
-2. Experience match — is the experience level similar?
-3. Location match — is the location relevant?
-4. Data specificity — specific posts are better than general ones"""
+                    "content": "You rank salary posts by relevance to a question. Return ONLY a JSON array of integers like [2, 1, 3]. No explanation, no markdown, just the array."
                 },
                 {
                     "role": "user",
-                    "content": f"Question: {query}\n\nPosts to rank:\n{posts_text}"
+                    "content": f"Question: {query}\n\n{posts_text}\n\nReturn the ranking array:"
                 }
             ],
             temperature=0,
@@ -56,9 +47,10 @@ Ranking criteria (by importance):
         raw = response.choices[0].message.content.strip()
         ranking = json.loads(raw)
 
-        if not isinstance(ranking, list):
-            raise ValueError("Invalid reranker response")
+        if not isinstance(ranking, list) or len(ranking) == 0:
+            raise ValueError(f"Invalid ranking: {raw}")
 
+        # Deduplicate and validate
         reranked = []
         seen_ids = set()
         for i in ranking:
@@ -69,13 +61,13 @@ Ranking criteria (by importance):
                     reranked.append(post)
 
         if not reranked:
-            raise ValueError("Empty ranking list")
+            raise ValueError("Empty after dedup")
 
         logger.info(f"Reranking successful: {[p['role'] for p in reranked[:top_k]]}")
         return reranked[:top_k]
 
     except json.JSONDecodeError as e:
-        logger.warning(f"Reranker returned invalid JSON: {e} | falling back")
+        logger.warning(f"Reranker invalid JSON: '{raw}' | {e} | falling back")
         return posts[:top_k]
 
     except Exception as e:

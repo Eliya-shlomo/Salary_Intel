@@ -1,3 +1,4 @@
+import asyncio
 from sqlalchemy.orm import Session
 from app.db.models import SalaryPost
 from app.rag.embeddings import get_embedding
@@ -10,7 +11,7 @@ from datetime import datetime
 logger = get_logger(__name__)
 
 
-def ingest_post(
+async def ingest_post(
     raw_text: str,
     role: str | None = None,
     years_experience: float | None = None,
@@ -19,43 +20,35 @@ def ingest_post(
     location: str | None = None,
     source: str = "manual",
     post_date: datetime | None = None,
-    auto_extract: bool = False,  # ← חדש
+    auto_extract: bool = False,
 ) -> SalaryPost:
-    """
-    קולט פוסט אחד, יוצר embedding ושומר במסד.
-
-    אם auto_extract=True — מחלץ מטאדאטה אוטומטית מהטקסט.
-    שימושי לנתונים גולמיים מפייסבוק.
-    """
     if not raw_text or not raw_text.strip():
-        raise ValueError("טקסט ריק — לא ניתן לקלוט")
+        raise ValueError("Empty text — cannot ingest")
 
-    # חילוץ אוטומטי אם ביקשו
     if auto_extract:
-        logger.info("מחלץ מטאדאטה אוטומטית...")
-        extracted = extract_salary_data(raw_text)
+        logger.info("Auto-extracting metadata...")
+        extracted = await extract_salary_data(raw_text)
 
         if not extracted["is_salary_post"]:
-            logger.warning("הפוסט לא עוסק בשכר — מדלג")
-            raise ValueError("הפוסט לא עוסק בשכר")
+            logger.warning("Post is not about salary — skipping")
+            raise ValueError("Post is not about salary")
 
-        # השתמש בחילוץ רק אם לא סופקו ידנית
         role = role or extracted["role"]
         salary = salary or extracted["salary"]
         years_experience = years_experience or extracted["years_experience"]
         company_stage = company_stage or extracted["company_stage"]
         location = location or extracted["location"]
 
-    logger.info(f"קולט: {role} | {salary}₪")
+    logger.info(f"Ingesting: {role} | {salary}₪")
 
     try:
         embedding_text = _build_embedding_text(
             raw_text, role, years_experience, salary, location
         )
-        embedding = get_embedding(embedding_text)
+        embedding = await get_embedding(embedding_text)
     except Exception as e:
-        logger.error(f"נכשל ביצירת embedding: {e}")
-        raise SalaryIntelError("לא ניתן לעבד את הפוסט")
+        logger.error(f"Embedding failed: {e}")
+        raise SalaryIntelError("Failed to process post")
 
     db: Session = SessionLocal()
     try:
@@ -73,13 +66,13 @@ def ingest_post(
         db.add(post)
         db.commit()
         db.refresh(post)
-        logger.info(f"נשמר | id={post.id}")
+        logger.info(f"Saved | id={post.id}")
         return post
 
     except Exception as e:
         db.rollback()
-        logger.error(f"שגיאת DB: {e}")
-        raise SalaryIntelError("שגיאה בשמירת הפוסט")
+        logger.error(f"DB error: {e}")
+        raise SalaryIntelError("Error saving post")
     finally:
         db.close()
 
@@ -93,11 +86,11 @@ def _build_embedding_text(
 ) -> str:
     parts = [raw_text]
     if role:
-        parts.append(f"תפקיד: {role}")
+        parts.append(f"Role: {role}")
     if years_experience:
-        parts.append(f"ניסיון: {years_experience} שנים")
+        parts.append(f"Experience: {years_experience} years")
     if salary:
-        parts.append(f"שכר: {salary}")
+        parts.append(f"Salary: {salary}")
     if location:
-        parts.append(f"מיקום: {location}")
+        parts.append(f"Location: {location}")
     return " | ".join(parts)

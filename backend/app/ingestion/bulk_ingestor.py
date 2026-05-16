@@ -4,11 +4,9 @@ from app.core.logging import get_logger
 logger = get_logger(__name__)
 
 
-def bulk_ingest(posts: list[str], source: str = "facebook") -> dict:
+async def bulk_ingest(posts: list[str], source: str = "facebook") -> dict:
     """
-    מכניס רשימת פוסטים גולמיים עם חילוץ אוטומטי.
-
-    מחזיר סיכום: כמה הצליחו, כמה נכשלו, כמה לא רלוונטיים.
+    Ingests a list of raw posts with automatic metadata extraction.
     """
     results = {
         "success": 0,
@@ -18,10 +16,10 @@ def bulk_ingest(posts: list[str], source: str = "facebook") -> dict:
     }
 
     for i, raw_text in enumerate(posts, 1):
-        logger.info(f"[{i}/{len(posts)}] מעבד פוסט...")
+        logger.info(f"[{i}/{len(posts)}] Processing post...")
 
         try:
-            ingest_post(
+            await ingest_post(
                 raw_text=raw_text,
                 source=source,
                 auto_extract=True,
@@ -29,18 +27,17 @@ def bulk_ingest(posts: list[str], source: str = "facebook") -> dict:
             results["success"] += 1
 
         except ValueError as e:
-            # פוסט לא רלוונטי — לא שגיאה
-            logger.info(f"דולג: {e}")
+            logger.info(f"Skipped: {e}")
             results["skipped"] += 1
 
         except Exception as e:
-            logger.error(f"נכשל: {e}")
+            logger.error(f"Failed: {e}")
             results["failed"] += 1
 
     logger.info(
-        f"\nסיכום: {results['success']} הצליחו | "
-        f"{results['skipped']} דולגו | "
-        f"{results['failed']} נכשלו"
+        f"\nSummary: {results['success']} succeeded | "
+        f"{results['skipped']} skipped | "
+        f"{results['failed']} failed"
     )
 
     return results
