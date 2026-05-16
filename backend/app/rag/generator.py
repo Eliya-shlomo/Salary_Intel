@@ -2,99 +2,134 @@ from openai import OpenAI, APIConnectionError, RateLimitError
 from app.core.config import settings
 from app.core.exceptions import GenerationError, RetrievalError
 from app.core.logging import get_logger
+from app.core.query_logger import QueryTracker
 from app.rag.retriever import search_similar_posts
 from app.rag.reranker import rerank_results
 
 logger = get_logger(__name__)
 client = OpenAI(api_key=settings.openai_api_key)
 
-SYSTEM_PROMPT = """אתה מומחה לשוק העבודה בהייטק הישראלי.
-אתה עונה על שאלות שכר בהתבסס אך ורק על נתונים אמיתיים מהקהילה.
+SYSTEM_PROMPT = """You are an expert on the Israeli tech job market.
+Answer salary questions based only on the real community data provided.
 
-חוקים:
-- ענה רק לפי הנתונים שסופקו. אל תמציא מספרים.
-- אם אין מספיק נתונים — אמור זאת בפירוש.
-- ציין טווח שכר ולא מספר בודד כשאפשר.
-- ענה בעברית, בצורה ישירה וברורה.
-- בסוף כל תשובה ציין כמה פוסטים השתמשת בהם."""
+Rules:
+- Only use the data provided. Never invent numbers.
+- If there is not enough data — say so explicitly.
+- Give a salary range, not a single number, when possible.
+- Answer in Hebrew, clearly and directly.
+- At the end, state how many posts you used."""
 
 
 def answer_salary_query(query: str) -> dict:
     if not query or not query.strip():
-        raise ValueError("שאלה ריקה")
+        raise ValueError("Empty query")
 
-    logger.info(f"שאלה התקבלה: '{query}'")
+    tracker = QueryTracker(query)
+    estimated_cost = 0.0
 
-    # שלב 1 — Retrieve
+    logger.info(f"Query received: '{query}'")
+
+    # Stage 1 — Retrieve
     try:
-        candidates = search_similar_posts(query, limit=10)
+        with tracker.track_stage("retrieval"):
+            candidates = search_similar_posts(query, limit=10)
+
+        tracker.posts_retrieved = len(candidates)
+        tracker.retrieved_post_ids = [p["id"] for p in candidates]
+
     except Exception as e:
-        logger.error(f"שגיאת retrieval: {e}")
-        raise RetrievalError("נכשל בחיפוש נתונים רלוונטיים")
+        logger.error(f"Retrieval error: {e}")
+        tracker.success = False
+        tracker.error_message = str(e)
+        tracker.save()
+        raise RetrievalError("Failed to retrieve relevant data")
 
     if not candidates:
-        logger.warning(f"לא נמצאו תוצאות: '{query}'")
+        logger.warning(f"No results for: '{query}'")
+        tracker.save()
         return {
             "answer": "לא נמצאו נתונים רלוונטיים לשאלה שלך.",
             "sources": [],
             "posts_used": 0
         }
 
-    logger.info(f"נמצאו {len(candidates)} מועמדים")
+    logger.info(f"Found {len(candidates)} candidates")
 
-    # שלב 2 — Rerank
+    # Stage 2 — Rerank
     try:
-        relevant_posts = rerank_results(query, candidates, top_k=3)
+        with tracker.track_stage("reranking"):
+            relevant_posts = rerank_results(query, candidates, top_k=3)
     except Exception as e:
-        logger.warning(f"Reranking נכשל, fallback לסדר מקורי: {e}")
+        logger.warning(f"Reranking failed, falling back to original order: {e}")
         relevant_posts = candidates[:3]
 
-    logger.info(f"אחרי reranking: {len(relevant_posts)} פוסטים")
+    tracker.posts_after_rerank = len(relevant_posts)
+    logger.info(f"After reranking: {len(relevant_posts)} posts")
 
-    # שלב 3 — Generate
+    # Stage 3 — Generate
     try:
-        context = _build_context(relevant_posts)
+        with tracker.track_stage("generation"):
+            context = _build_context(relevant_posts)
 
-        response = client.chat.completions.create(
-            model="gpt-4o-mini",
-            messages=[
-                {"role": "system", "content": SYSTEM_PROMPT},
-                {"role": "user", "content": f"נתונים:\n{context}\n\nשאלה: {query}"}
-            ],
-            temperature=0.3,
-        )
+            response = client.chat.completions.create(
+                model="gpt-4o-mini",
+                messages=[
+                    {"role": "system", "content": SYSTEM_PROMPT},
+                    {"role": "user", "content": f"Data:\n{context}\n\nQuestion: {query}"}
+                ],
+                temperature=0.3,
+            )
 
         answer = response.choices[0].message.content
-        logger.info(f"תשובה נוצרה | {len(answer)} תווים")
 
-        return {
-            "answer": answer,
-            "sources": relevant_posts,
-            "posts_used": len(relevant_posts)
-        }
+        # Track cost
+        usage = response.usage
+        estimated_cost = tracker.add_tokens(
+            usage.prompt_tokens,
+            usage.completion_tokens
+        )
+
+        logger.info(f"Answer generated | {len(answer)} chars | ${estimated_cost}")
 
     except RateLimitError:
-        logger.error("OpenAI Rate Limit בזמן generation")
-        raise GenerationError("עומס על השרת, נסה שוב בעוד מספר שניות")
+        logger.error("OpenAI Rate Limit during generation")
+        tracker.success = False
+        tracker.error_message = "RateLimitError"
+        tracker.save(estimated_cost)
+        raise GenerationError("Server overloaded, please try again in a few seconds")
 
     except APIConnectionError:
-        logger.error("חיבור ל-OpenAI נכשל בזמן generation")
-        raise GenerationError("בעיית תקשורת עם שרת ה-AI")
+        logger.error("OpenAI connection failed during generation")
+        tracker.success = False
+        tracker.error_message = "APIConnectionError"
+        tracker.save(estimated_cost)
+        raise GenerationError("AI server connection error")
 
     except Exception as e:
-        logger.error(f"שגיאה לא צפויה ב-generation: {e}")
-        raise GenerationError("שגיאה ביצירת התשובה")
+        logger.error(f"Unexpected generation error: {e}")
+        tracker.success = False
+        tracker.error_message = str(e)
+        tracker.save(estimated_cost)
+        raise GenerationError("Error generating answer")
+
+    tracker.save(estimated_cost)
+
+    return {
+        "answer": answer,
+        "sources": relevant_posts,
+        "posts_used": len(relevant_posts)
+    }
 
 
 def _build_context(posts: list[dict]) -> str:
     lines = []
     for i, post in enumerate(posts, 1):
         lines.append(
-            f"פוסט {i}:\n"
-            f"תפקיד: {post['role']} | "
-            f"ניסיון: {post['years_experience']} שנים | "
-            f"שכר: {post['salary']}₪ | "
-            f"מיקום: {post['location']}\n"
-            f"ציטוט: {post['raw_text']}\n"
+            f"Post {i}:\n"
+            f"Role: {post['role']} | "
+            f"Experience: {post['years_experience']} years | "
+            f"Salary: {post['salary']}₪ | "
+            f"Location: {post['location']}\n"
+            f"Quote: {post['raw_text']}\n"
         )
     return "\n".join(lines)
