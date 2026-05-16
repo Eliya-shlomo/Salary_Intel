@@ -193,3 +193,48 @@ def _sanitize_keyword(kw: str) -> str:
 * [ ] Salary trend analysis over time
 
 ---
+
+פתח את `README.md` בroot ומצא את הסקשן `## Key Technical Decisions`.
+
+הוסף אחריו את הסקשן הזה:
+
+````markdown
+## Performance & Observability
+
+### Query Latency Tracking
+Every query is logged to the database with per-stage latency:
+
+```sql
+SELECT query, latency_retrieval, latency_generation, latency_total, estimated_cost_usd
+FROM query_logs ORDER BY created_at DESC;
+```
+
+### Async Parallelism — Retrieval Optimization
+Embedding and query expansion previously ran sequentially (~5s retrieval).
+Converted to `asyncio.gather` to run both OpenAI calls in parallel:
+
+```python
+# Before: sequential — 5.0s
+query_embedding = get_embedding(query)
+keywords = expand_query(query)
+
+# After: parallel — 1.9s
+query_embedding, keywords = await asyncio.gather(
+    get_embedding(query),
+    expand_query(query)
+)
+```
+
+**Measured improvement:**
+
+| Metric | Before | After | Change |
+|---|---|---|---|
+| avg retrieval | 5.0s | 1.9s | -62% |
+| avg total | 6.9s | 5.1s | -26% |
+| bottleneck | retrieval | generation (GPT) | shifted |
+
+### Cost per Query
+Estimated at ~$0.000085 per query using `gpt-4o-mini`.
+Token usage tracked per query in `query_logs.tokens_used`.
+````
+

@@ -33,16 +33,16 @@ class IngestRequest(BaseModel):
 
 @router.post("/query", response_model=QueryResponse)
 @limiter.limit("10/minute")
-def query_salary(
+async def query_salary(
     request: Request,
     body: QueryRequest,
-    api_key: str = Depends(verify_api_key)  
+    api_key: str = Depends(verify_api_key)
 ):
     if not body.query.strip():
-        raise HTTPException(status_code=400, detail="שאלה ריקה")
+        raise HTTPException(status_code=400, detail="Empty query")
 
     try:
-        result = answer_salary_query(body.query)
+        result = await answer_salary_query(body.query)
         return QueryResponse(**result)
 
     except SalaryIntelError as e:
@@ -51,19 +51,19 @@ def query_salary(
 
     except Exception as e:
         logger.error(f"Unexpected error: {e}", exc_info=True)
-        raise HTTPException(status_code=500, detail="שגיאה פנימית")
+        raise HTTPException(status_code=500, detail="Internal server error")
 
 
 @router.post("/ingest")
 @limiter.limit("5/minute")
-def ingest_new_post(
+async def ingest_new_post(
     request: Request,
     body: IngestRequest,
-    api_key: str = Depends(verify_api_key)  # ← חדש
+    api_key: str = Depends(verify_api_key)
 ):
     try:
         post = ingest_post(**body.model_dump())
-        return {"id": post.id, "message": "נשמר בהצלחה"}
+        return {"id": post.id, "message": "Saved successfully"}
 
     except SalaryIntelError as e:
         logger.warning(f"Ingest error: {e}")
@@ -71,14 +71,14 @@ def ingest_new_post(
 
     except Exception as e:
         logger.error(f"Unexpected ingest error: {e}", exc_info=True)
-        raise HTTPException(status_code=500, detail="שגיאה בשמירת הפוסט")
+        raise HTTPException(status_code=500, detail="Error saving post")
 
 
 @router.get("/stats")
 @limiter.limit("30/minute")
-def get_stats(
+async def get_stats(
     request: Request,
-    api_key: str = Depends(verify_api_key)  # ← חדש
+    api_key: str = Depends(verify_api_key)
 ):
     try:
         from app.db.database import SessionLocal
@@ -92,4 +92,4 @@ def get_stats(
 
     except Exception as e:
         logger.error(f"Stats error: {e}")
-        raise HTTPException(status_code=500, detail="שגיאה בטעינת סטטיסטיקות")
+        raise HTTPException(status_code=500, detail="Error loading stats")

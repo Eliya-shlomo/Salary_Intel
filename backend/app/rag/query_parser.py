@@ -1,44 +1,40 @@
-from openai import OpenAI
+from openai import AsyncOpenAI
 from app.core.config import settings
+from app.core.logging import get_logger
 import json
 
-client = OpenAI(api_key=settings.openai_api_key)
+logger = get_logger(__name__)
+client = AsyncOpenAI(api_key=settings.openai_api_key)
 
-def expand_query(query: str) -> dict:
+
+async def expand_query(query: str) -> dict:
     """
-    מחלץ מילות מפתח מהשאלה ומפריד לפי סוג וחשיבות.
-    
-    מחזיר:
-    {
-        "role": ["Data Scientist", "ML Engineer"],
-        "tech": ["Python", "TensorFlow"],
-        "location": ["תל אביב"]
-    }
+    Sends the query to GPT and returns structured keywords by category.
+
+    Example:
+    "כמה מרוויח DevOps בכיר?"
+    → {"role": ["devops", "devops engineer"], "tech": ["aws", "docker"], "location": []}
     """
-    response = client.chat.completions.create(
+    response = await client.chat.completions.create(
         model="gpt-4o-mini",
         messages=[
             {
                 "role": "system",
-                "content": """אתה עוזר לחיפוש מידע על שכר בהייטק הישראלי.
-קבל שאלה והחזר JSON עם מילות מפתח מופרדות לפי קטגוריה.
+                "content": """You are a helper for searching Israeli tech salary data.
+Given a question, return relevant keywords separated by category.
 
-החזר אך ורק JSON בפורמט הזה, ללא טקסט נוסף:
+Return ONLY a JSON object, no extra text:
 {
-  "role": [],      // תפקידים ושמות משרות - הכי חשוב
-  "tech": [],      // טכנולוגיות וכלים - חשוב
-  "location": []   // מיקומים בלבד - פחות חשוב
+  "role": [],      // job titles in Hebrew and English — most important
+  "tech": [],      // specific technologies only — important
+  "location": []   // geographic locations only — less important
 }
 
-חוקים:
-- role: תפקידים בעברית ואנגלית, מקסימום 3
-- tech: טכנולוגיות ספציפיות בלבד, מקסימום 3  
-- location: מיקומים גיאוגרפיים בלבד, מקסימום 2
-- אם קטגוריה לא רלוונטית — מערך ריק
-
-דוגמה:
-שאלה: "כמה מרוויח data scientist מתחיל?"
-תשובה: {"role": ["data scientist", "ml engineer"], "tech": ["python", "machine learning"], "location": []}"""
+Rules:
+- role: job titles in Hebrew and English, max 3
+- tech: specific technologies only, max 3
+- location: geographic locations only, max 2
+- If a category is not relevant — empty array"""
             },
             {
                 "role": "user",

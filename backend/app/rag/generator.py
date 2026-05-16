@@ -1,4 +1,5 @@
-from openai import OpenAI, APIConnectionError, RateLimitError
+import asyncio
+from openai import AsyncOpenAI, APIConnectionError, RateLimitError
 from app.core.config import settings
 from app.core.exceptions import GenerationError, RetrievalError
 from app.core.logging import get_logger
@@ -7,7 +8,7 @@ from app.rag.retriever import search_similar_posts
 from app.rag.reranker import rerank_results
 
 logger = get_logger(__name__)
-client = OpenAI(api_key=settings.openai_api_key)
+client = AsyncOpenAI(api_key=settings.openai_api_key)
 
 SYSTEM_PROMPT = """You are an expert on the Israeli tech job market.
 Answer salary questions based only on the real community data provided.
@@ -20,7 +21,7 @@ Rules:
 - At the end, state how many posts you used."""
 
 
-def answer_salary_query(query: str) -> dict:
+async def answer_salary_query(query: str) -> dict:
     if not query or not query.strip():
         raise ValueError("Empty query")
 
@@ -32,7 +33,7 @@ def answer_salary_query(query: str) -> dict:
     # Stage 1 — Retrieve
     try:
         with tracker.track_stage("retrieval"):
-            candidates = search_similar_posts(query, limit=10)
+            candidates = await search_similar_posts(query, limit=10)
 
         tracker.posts_retrieved = len(candidates)
         tracker.retrieved_post_ids = [p["id"] for p in candidates]
@@ -53,25 +54,22 @@ def answer_salary_query(query: str) -> dict:
             "posts_used": 0
         }
 
-    logger.info(f"Found {len(candidates)} candidates")
-
     # Stage 2 — Rerank
     try:
         with tracker.track_stage("reranking"):
-            relevant_posts = rerank_results(query, candidates, top_k=3)
+            relevant_posts = await rerank_results(query, candidates, top_k=3)
     except Exception as e:
-        logger.warning(f"Reranking failed, falling back to original order: {e}")
+        logger.warning(f"Reranking failed, falling back: {e}")
         relevant_posts = candidates[:3]
 
     tracker.posts_after_rerank = len(relevant_posts)
-    logger.info(f"After reranking: {len(relevant_posts)} posts")
 
     # Stage 3 — Generate
     try:
         with tracker.track_stage("generation"):
             context = _build_context(relevant_posts)
 
-            response = client.chat.completions.create(
+            response = await client.chat.completions.create(
                 model="gpt-4o-mini",
                 messages=[
                     {"role": "system", "content": SYSTEM_PROMPT},
@@ -81,36 +79,23 @@ def answer_salary_query(query: str) -> dict:
             )
 
         answer = response.choices[0].message.content
-
-        # Track cost
         usage = response.usage
         estimated_cost = tracker.add_tokens(
             usage.prompt_tokens,
             usage.completion_tokens
         )
 
-        logger.info(f"Answer generated | {len(answer)} chars | ${estimated_cost}")
-
     except RateLimitError:
-        logger.error("OpenAI Rate Limit during generation")
         tracker.success = False
         tracker.error_message = "RateLimitError"
         tracker.save(estimated_cost)
-        raise GenerationError("Server overloaded, please try again in a few seconds")
+        raise GenerationError("Server overloaded, please try again")
 
     except APIConnectionError:
-        logger.error("OpenAI connection failed during generation")
         tracker.success = False
         tracker.error_message = "APIConnectionError"
         tracker.save(estimated_cost)
         raise GenerationError("AI server connection error")
-
-    except Exception as e:
-        logger.error(f"Unexpected generation error: {e}")
-        tracker.success = False
-        tracker.error_message = str(e)
-        tracker.save(estimated_cost)
-        raise GenerationError("Error generating answer")
 
     tracker.save(estimated_cost)
 

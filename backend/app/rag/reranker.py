@@ -1,24 +1,16 @@
-from openai import OpenAI
+from openai import AsyncOpenAI
 from app.core.config import settings
 from app.core.logging import get_logger
 import json
 
 logger = get_logger(__name__)
-client = OpenAI(api_key=settings.openai_api_key)
+client = AsyncOpenAI(api_key=settings.openai_api_key)
 
 
-def rerank_results(query: str, posts: list[dict], top_k: int = 3) -> list[dict]:
+async def rerank_results(query: str, posts: list[dict], top_k: int = 3) -> list[dict]:
     """
-    מדרג מחדש תוצאות חיפוש לפי רלוונטיות אמיתית לשאלה.
-
-    למה לא לסמוך רק על RRF?
-    כי RRF מודד דמיון טכני — וקטורים ומילות מפתח.
-    Reranker מודד רלוונטיות סמנטית עמוקה יותר.
-
-    דוגמה:
-    שאלה: "DevOps בכיר עם 8 שנים"
-    פוסט א: DevOps 6 שנים          → RRF גבוה, rerank בינוני
-    פוסט ב: Senior DevOps 8 שנים   → RRF בינוני, rerank גבוה ✓
+    Re-ranks search results by true relevance to the query.
+    GPT reads all candidates and returns the most relevant order.
     """
     if not posts:
         return []
@@ -27,34 +19,34 @@ def rerank_results(query: str, posts: list[dict], top_k: int = 3) -> list[dict]:
         return posts[:top_k]
 
     posts_text = "\n\n".join([
-        f"פוסט {i+1}:\n"
-        f"תפקיד: {p['role']} | ניסיון: {p['years_experience']} שנים | "
-        f"שכר: {p['salary']}₪ | מיקום: {p['location']}\n"
-        f"תוכן: {p['raw_text']}"
+        f"Post {i+1}:\n"
+        f"Role: {p['role']} | Experience: {p['years_experience']} years | "
+        f"Salary: {p['salary']}₪\n"
+        f"Content: {p['raw_text']}"
         for i, p in enumerate(posts)
     ])
 
     try:
-        response = client.chat.completions.create(
+        response = await client.chat.completions.create(
             model="gpt-4o-mini",
             messages=[
                 {
                     "role": "system",
-                    "content": """אתה מומחה לשוק העבודה בהייטק הישראלי.
-תפקידך לדרג פוסטים לפי רלוונטיות לשאלת השכר.
+                    "content": """You are an expert on the Israeli tech job market.
+Rank the posts by relevance to the salary question.
 
-החזר אך ורק JSON array של מספרי הפוסטים מהכי רלוונטי לפחות רלוונטי.
-דוגמה: [2, 1, 3]
+Return ONLY a JSON array of post numbers from most to least relevant.
+Example: [2, 1, 3]
 
-קריטריונים לדירוג (לפי חשיבות):
-1. התאמת תפקיד — האם הפוסט על אותו תפקיד?
-2. התאמת ניסיון — האם רמת הניסיון דומה?
-3. התאמת מיקום — האם המיקום רלוונטי?
-4. עדכניות המידע — פוסטים ספציפיים עדיפים על כלליים"""
+Ranking criteria (by importance):
+1. Role match — is the post about the same role?
+2. Experience match — is the experience level similar?
+3. Location match — is the location relevant?
+4. Data specificity — specific posts are better than general ones"""
                 },
                 {
                     "role": "user",
-                    "content": f"שאלה: {query}\n\nפוסטים לדירוג:\n{posts_text}"
+                    "content": f"Question: {query}\n\nPosts to rank:\n{posts_text}"
                 }
             ],
             temperature=0,
@@ -65,9 +57,8 @@ def rerank_results(query: str, posts: list[dict], top_k: int = 3) -> list[dict]:
         ranking = json.loads(raw)
 
         if not isinstance(ranking, list):
-            raise ValueError("תגובה לא תקינה מה-reranker")
+            raise ValueError("Invalid reranker response")
 
-        # תיקון כפילויות — כל פוסט מופיע פעם אחת בלבד
         reranked = []
         seen_ids = set()
         for i in ranking:
@@ -78,15 +69,15 @@ def rerank_results(query: str, posts: list[dict], top_k: int = 3) -> list[dict]:
                     reranked.append(post)
 
         if not reranked:
-            raise ValueError("רשימת reranking ריקה")
+            raise ValueError("Empty ranking list")
 
-        logger.info(f"Reranking הצליח: {[p['role'] for p in reranked[:top_k]]}")
+        logger.info(f"Reranking successful: {[p['role'] for p in reranked[:top_k]]}")
         return reranked[:top_k]
 
     except json.JSONDecodeError as e:
-        logger.warning(f"Reranker החזיר JSON לא תקין: {e} | fallback לסדר מקורי")
+        logger.warning(f"Reranker returned invalid JSON: {e} | falling back")
         return posts[:top_k]
 
     except Exception as e:
-        logger.warning(f"Reranking נכשל: {e} | fallback לסדר מקורי")
+        logger.warning(f"Reranking failed: {e} | falling back")
         return posts[:top_k]
