@@ -209,6 +209,15 @@ PYTHONPATH=. .venv/bin/python -m evals.critic_detection
 
 These two call OpenAI (a few hundred `gpt-4o-mini` requests, a few cents).
 
+Rebuilding the synthetic dataset (calls OpenAI, about 1.15 writer calls per post, then about 3 calls per post to ingest):
+
+```bash
+.venv/bin/python -m app.ingestion.calibrated_generator --count 400 --seed 7 --out data/synthetic_v2
+PYTHONPATH=. .venv/bin/python -m evals.generated_sanity data/synthetic_v2
+.venv/bin/python -m app.ingestion.ingest_generated data/synthetic_v2
+PYTHONPATH=. .venv/bin/python -m evals.extraction_accuracy data/synthetic_v2
+```
+
 ### Configuration
 
 | Variable | Required | Notes |
@@ -246,8 +255,27 @@ salary-intel/
 
 ## Data and honesty notes
 
-* The database holds 401 posts: **396 synthetic** (`source='synthetic'`) and **5 pasted by hand** (`source='manual_paste'`). The system has not been run on a real, large corpus.
-* Every existing row has `pay_basis='unknown'`, so a gross-only or net-only filter returns `n=0` until posts arrive through the pipeline.
+**The posts are synthetic.** They were generated, not collected, and are labelled `source='synthetic_v2'`. Their salaries are calibrated on salary tables that Israeli recruiters published in 2025-2026. The system has not been run on a real, large corpus. 5 more posts were pasted by hand (`source='manual_paste'`).
+
+How the dataset is built ([`backend/research/RESEARCH_salary_sources.md`](backend/research/RESEARCH_salary_sources.md)):
+
+1. **Sources.** Published salary ranges by role and seniority from GotFriends (Sep 2026), Nisha (2025-2026) and JobInfo (Jan 2026), monthly gross in ILS. Each range is stored as published, with its URL, in [`salary_reference.json`](backend/app/ingestion/salary_reference.json). US sources (BLS, Stack Overflow, Levels.fyi, Robert Half) were used only to cross-check ratios between roles and between levels, never for amounts.
+2. **Reference table.** Code turns the ranges into p25 / median / p75 per role × bucket (0-2, 3-5, 6-10 years) by a fixed rule, with a confidence level computed from how many publishers agree (`python -m app.ingestion.salary_reference`).
+3. **Generation.** Code samples role, years, salary, gross/unstated basis, equity and city, and chooses the exact phrases (`31K ברוטו`, `4 שנות ניסיון`). `gpt-4o-mini` only writes Hebrew around them. `parse_amount` and `normalize_role` then read every post back, and a post that does not say exactly what was sampled is dropped (`app/ingestion/calibrated_generator.py`).
+4. **Ground truth.** The sampled facts of every post are kept in `backend/data/synthetic_v2/ground_truth.jsonl`, so extraction can be scored against known answers (`evals/extraction_accuracy.py`).
+
+Limits of the data:
+
+* No source publishes percentiles. A recruiter's "from–to" range is **assumed** to be its p25–p75.
+* Recruiter tables describe people being placed, which skews toward in-demand profiles. GotFriends and JobInfo do not say "gross"; they are read as gross by Israeli convention.
+* Role mix, city mix, post styles and the share of posts with equity have no source. They are marked as assumptions in the JSON.
+* No net-pay posts and no posts above 10 years of experience are generated: there is no sourced way to produce them.
+* Pay is not adjusted by city.
+
+The previous 396 synthetic posts (salary ranges written into a prompt, no source, `source='synthetic'`) were deleted and are still in git history (`data_generator.py`).
+
+Other notes:
+
 * Salary statistics need at least 5 matching posts. Below that, the tools return no percentiles and say why, instead of guessing.
 * The near-duplicate similarity threshold (0.95) was not tuned.
 * `/query` returns only a 200-character snippet of each source.

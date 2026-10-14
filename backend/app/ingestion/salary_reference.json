@@ -3,7 +3,7 @@
   "method": {
     "range_meaning": "Assumption: a published from-to range is read as the source's p25-p75. No source defines its bounds.",
     "cell_rule": "Rows of one publisher in a cell are averaged into one range. Across publishers: p25 = median of lows, p75 = median of highs, median = median of midpoints.",
-    "inclusion": "Dated 2025-2026 recruiter tables whose buckets line up with ours, with an unambiguous role mapping. Excluded: AllJobs (excludes bonus, undated, runs 5-10K below every recruiter), Ethosia tables (undated, buckets offset by a year), Levels.fyi (annual total comp with stock), Payscale (n=144, implausible p10). See backend/research/RESEARCH_salary_sources.md.",
+    "inclusion": "Dated 2025-2026 recruiter tables whose buckets line up with ours, with an unambiguous role mapping, plus JobInfo's Python and Java rows as backend. Excluded: AllJobs (excludes bonus, undated, runs 5-10K below every recruiter), Ethosia tables (undated, buckets offset by a year), Levels.fyi (annual total comp with stock), Payscale (n=144, implausible p10). See backend/research/RESEARCH_salary_sources.md.",
     "buckets": "junior 0-2, mid 3-5, senior 6-10 (GotFriends' own buckets). No 10+ bucket: no source covers it for most roles.",
     "basis": "All values are monthly gross base in ILS. GotFriends and JobInfo do not say gross; treated as gross by Israeli convention."
   },
@@ -217,6 +217,66 @@
       "bucket": "senior",
       "low": 35000,
       "high": 45000
+    },
+    {
+      "source": "IL-S15",
+      "source_role": "מפתח/ת python",
+      "role": "backend",
+      "source_bucket": "בוגר",
+      "bucket": "junior",
+      "low": 20000,
+      "high": 21000,
+      "note": "Language row mapped to backend (decision 2026-10-14): Nisha's Backend Engineer row sits below Nisha's own Java/Python rows."
+    },
+    {
+      "source": "IL-S15",
+      "source_role": "מפתח/ת python",
+      "role": "backend",
+      "source_bucket": "3-5",
+      "bucket": "mid",
+      "low": 30000,
+      "high": 34000,
+      "note": "Language row mapped to backend (decision 2026-10-14): Nisha's Backend Engineer row sits below Nisha's own Java/Python rows."
+    },
+    {
+      "source": "IL-S15",
+      "source_role": "מפתח/ת python",
+      "role": "backend",
+      "source_bucket": "מעל 5",
+      "bucket": "senior",
+      "low": 35000,
+      "high": 40000,
+      "note": "Language row mapped to backend (decision 2026-10-14): Nisha's Backend Engineer row sits below Nisha's own Java/Python rows."
+    },
+    {
+      "source": "IL-S15",
+      "source_role": "מתכנת Java",
+      "role": "backend",
+      "source_bucket": "בוגר",
+      "bucket": "junior",
+      "low": 19000,
+      "high": 21000,
+      "note": "Language row mapped to backend (decision 2026-10-14): Nisha's Backend Engineer row sits below Nisha's own Java/Python rows."
+    },
+    {
+      "source": "IL-S15",
+      "source_role": "מתכנת Java",
+      "role": "backend",
+      "source_bucket": "3-5",
+      "bucket": "mid",
+      "low": 30000,
+      "high": 34000,
+      "note": "Language row mapped to backend (decision 2026-10-14): Nisha's Backend Engineer row sits below Nisha's own Java/Python rows."
+    },
+    {
+      "source": "IL-S15",
+      "source_role": "מתכנת Java",
+      "role": "backend",
+      "source_bucket": "מעל 5",
+      "bucket": "senior",
+      "low": 35000,
+      "high": 40000,
+      "note": "Language row mapped to backend (decision 2026-10-14): Nisha's Backend Engineer row sits below Nisha's own Java/Python rows."
     },
     {
       "source": "IL-S1",

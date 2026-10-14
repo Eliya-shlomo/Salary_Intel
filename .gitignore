@@ -11,3 +11,4 @@ frontend/.env.local
 .frontend.pid
 
 backend/scraper/output/
+backups/
