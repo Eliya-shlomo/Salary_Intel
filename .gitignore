@@ -6,5 +6,8 @@ __pycache__/
 .DS_Store
 node_modules/
 .next/
-*.egg-info/frontend/.env.local
+*.egg-info/
+frontend/.env.local
 .frontend.pid
+
+backend/scraper/output/
