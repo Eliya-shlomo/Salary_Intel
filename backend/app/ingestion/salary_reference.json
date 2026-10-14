@@ -1,0 +1,1122 @@
+{
+  "version": "2026-10-14",
+  "method": {
+    "range_meaning": "Assumption: a published from-to range is read as the source's p25-p75. No source defines its bounds.",
+    "cell_rule": "Rows of one publisher in a cell are averaged into one range. Across publishers: p25 = median of lows, p75 = median of highs, median = median of midpoints.",
+    "inclusion": "Dated 2025-2026 recruiter tables whose buckets line up with ours, with an unambiguous role mapping. Excluded: AllJobs (excludes bonus, undated, runs 5-10K below every recruiter), Ethosia tables (undated, buckets offset by a year), Levels.fyi (annual total comp with stock), Payscale (n=144, implausible p10). See backend/research/RESEARCH_salary_sources.md.",
+    "buckets": "junior 0-2, mid 3-5, senior 6-10 (GotFriends' own buckets). No 10+ bucket: no source covers it for most roles.",
+    "basis": "All values are monthly gross base in ILS. GotFriends and JobInfo do not say gross; treated as gross by Israeli convention."
+  },
+  "sources": [
+    {
+      "id": "IL-S1",
+      "publisher": "Nisha",
+      "url": "https://www.nisha.co.il/%d7%9e%d7%a9%d7%9b%d7%95%d7%a8%d7%95%d7%aa-%d7%94%d7%99%d7%99%d7%98%d7%a7/",
+      "year": 2026,
+      "accessed": "2026-10-14",
+      "notes": "Recruiter table, data as of April 2026, published 2026-05-28. Ranges, bounds undefined. Monthly; headline tables say gross. Buckets 1-2 / 3-5 / 6-10 / management."
+    },
+    {
+      "id": "IL-S2",
+      "publisher": "Nisha",
+      "url": "https://www.nisha.co.il/salary-tables/%D7%94%D7%99%D7%99%D7%98%D7%A7/",
+      "year": 2025,
+      "accessed": "2026-10-14",
+      "notes": "Older Nisha edition titled 2025. Footnote: gross by seniority and company size. Used only for roles the 2026 pages do not cover (mobile, qa, architect)."
+    },
+    {
+      "id": "IL-S3",
+      "publisher": "Nisha",
+      "url": "https://www.nisha.co.il/?p=12547",
+      "year": 2026,
+      "accessed": "2026-10-14",
+      "notes": "DevOps/Cloud/SRE guide, 2026-08-31. Gross monthly. Buckets 0-2 / 3-5 / 6+. Blend of Israeli market sources plus Nisha estimates."
+    },
+    {
+      "id": "IL-S4",
+      "publisher": "Nisha",
+      "url": "https://www.nisha.co.il/%D7%9E%D7%93%D7%A8%D7%99%D7%9A-%D7%A9%D7%9B%D7%A8-%D7%91%D7%A1%D7%99%D7%99%D7%91%D7%A8/",
+      "year": 2026,
+      "accessed": "2026-10-14",
+      "notes": "Cyber guide, 2026-08-31. Gross monthly. Buckets 0-2 / 3-5 / 6+. Three role families used; architecture/management family excluded."
+    },
+    {
+      "id": "IL-S6",
+      "publisher": "GotFriends",
+      "url": "https://www.gotfriends.co.il/%D7%91%D7%9C%D7%95%D7%92%D7%99%D7%9D/high-tech-salary-tables/",
+      "year": 2026,
+      "accessed": "2026-10-14",
+      "notes": "Recruiter table updated September 2026, from own placements (1,400+ a year). Thousands of ILS per month; gross/net and average/median not stated. Buckets 0-2 / 3-5 / 6-10 / management."
+    },
+    {
+      "id": "IL-S15",
+      "publisher": "JobInfo",
+      "url": "https://www.drushim.co.il/article/107",
+      "year": 2026,
+      "accessed": "2026-10-14",
+      "notes": "JobInfo data republished by Drushim, dated 2026-01-01. Thousands of ILS; gross/net not stated. Buckets graduate / 2-3 / 3-5 / over 5 / team lead. The 2-3 column is not used because it straddles junior and mid."
+    },
+    {
+      "id": "IL-S16",
+      "publisher": "JobInfo",
+      "url": "https://www.drushim.co.il/article/117/",
+      "year": 2026,
+      "accessed": "2026-10-14",
+      "notes": "Same publisher and caveats as IL-S15 (infrastructure table)."
+    }
+  ],
+  "buckets": [
+    {
+      "name": "junior",
+      "min_years": 0,
+      "max_years": 2
+    },
+    {
+      "name": "mid",
+      "min_years": 3,
+      "max_years": 5
+    },
+    {
+      "name": "senior",
+      "min_years": 6,
+      "max_years": 10
+    }
+  ],
+  "observations": [
+    {
+      "source": "IL-S1",
+      "source_role": "Fullstack Developer",
+      "role": "fullstack",
+      "source_bucket": "1-2",
+      "bucket": "junior",
+      "low": 20000,
+      "high": 25000
+    },
+    {
+      "source": "IL-S1",
+      "source_role": "Fullstack Developer",
+      "role": "fullstack",
+      "source_bucket": "3-5",
+      "bucket": "mid",
+      "low": 25000,
+      "high": 35000
+    },
+    {
+      "source": "IL-S1",
+      "source_role": "Fullstack Developer",
+      "role": "fullstack",
+      "source_bucket": "6-10",
+      "bucket": "senior",
+      "low": 32000,
+      "high": 45000
+    },
+    {
+      "source": "IL-S6",
+      "source_role": "Full Stack Developer",
+      "role": "fullstack",
+      "source_bucket": "0-2",
+      "bucket": "junior",
+      "low": 20000,
+      "high": 26000
+    },
+    {
+      "source": "IL-S6",
+      "source_role": "Full Stack Developer",
+      "role": "fullstack",
+      "source_bucket": "3-5",
+      "bucket": "mid",
+      "low": 27000,
+      "high": 37000
+    },
+    {
+      "source": "IL-S6",
+      "source_role": "Full Stack Developer",
+      "role": "fullstack",
+      "source_bucket": "6-10",
+      "bucket": "senior",
+      "low": 34000,
+      "high": 45000
+    },
+    {
+      "source": "IL-S15",
+      "source_role": "מפתח/ת Fullstack",
+      "role": "fullstack",
+      "source_bucket": "בוגר",
+      "bucket": "junior",
+      "low": 20000,
+      "high": 21000
+    },
+    {
+      "source": "IL-S15",
+      "source_role": "מפתח/ת Fullstack",
+      "role": "fullstack",
+      "source_bucket": "3-5",
+      "bucket": "mid",
+      "low": 30000,
+      "high": 34000
+    },
+    {
+      "source": "IL-S15",
+      "source_role": "מפתח/ת Fullstack",
+      "role": "fullstack",
+      "source_bucket": "מעל 5",
+      "bucket": "senior",
+      "low": 35000,
+      "high": 40000
+    },
+    {
+      "source": "IL-S1",
+      "source_role": "Backend Engineer",
+      "role": "backend",
+      "source_bucket": "1-2",
+      "bucket": "junior",
+      "low": 20000,
+      "high": 25000
+    },
+    {
+      "source": "IL-S1",
+      "source_role": "Backend Engineer",
+      "role": "backend",
+      "source_bucket": "3-5",
+      "bucket": "mid",
+      "low": 24000,
+      "high": 28000
+    },
+    {
+      "source": "IL-S1",
+      "source_role": "Backend Engineer",
+      "role": "backend",
+      "source_bucket": "6-10",
+      "bucket": "senior",
+      "low": 28000,
+      "high": 35000
+    },
+    {
+      "source": "IL-S6",
+      "source_role": "Backend Developer",
+      "role": "backend",
+      "source_bucket": "0-2",
+      "bucket": "junior",
+      "low": 22000,
+      "high": 27000
+    },
+    {
+      "source": "IL-S6",
+      "source_role": "Backend Developer",
+      "role": "backend",
+      "source_bucket": "3-5",
+      "bucket": "mid",
+      "low": 30000,
+      "high": 37000
+    },
+    {
+      "source": "IL-S6",
+      "source_role": "Backend Developer",
+      "role": "backend",
+      "source_bucket": "6-10",
+      "bucket": "senior",
+      "low": 35000,
+      "high": 45000
+    },
+    {
+      "source": "IL-S1",
+      "source_role": "Front End – React",
+      "role": "frontend",
+      "source_bucket": "1-2",
+      "bucket": "junior",
+      "low": 20000,
+      "high": 25000
+    },
+    {
+      "source": "IL-S1",
+      "source_role": "Front End – React",
+      "role": "frontend",
+      "source_bucket": "3-5",
+      "bucket": "mid",
+      "low": 25000,
+      "high": 32000
+    },
+    {
+      "source": "IL-S1",
+      "source_role": "Front End – React",
+      "role": "frontend",
+      "source_bucket": "6-10",
+      "bucket": "senior",
+      "low": 32000,
+      "high": 40000
+    },
+    {
+      "source": "IL-S1",
+      "source_role": "Front End – Angular",
+      "role": "frontend",
+      "source_bucket": "1-2",
+      "bucket": "junior",
+      "low": 15000,
+      "high": 25000
+    },
+    {
+      "source": "IL-S1",
+      "source_role": "Front End – Angular",
+      "role": "frontend",
+      "source_bucket": "3-5",
+      "bucket": "mid",
+      "low": 25000,
+      "high": 32000
+    },
+    {
+      "source": "IL-S1",
+      "source_role": "Front End – Angular",
+      "role": "frontend",
+      "source_bucket": "6-10",
+      "bucket": "senior",
+      "low": 32000,
+      "high": 40000
+    },
+    {
+      "source": "IL-S1",
+      "source_role": "Front End – Vue",
+      "role": "frontend",
+      "source_bucket": "1-2",
+      "bucket": "junior",
+      "low": 20000,
+      "high": 25000
+    },
+    {
+      "source": "IL-S1",
+      "source_role": "Front End – Vue",
+      "role": "frontend",
+      "source_bucket": "3-5",
+      "bucket": "mid",
+      "low": 25000,
+      "high": 30000
+    },
+    {
+      "source": "IL-S1",
+      "source_role": "Front End – Vue",
+      "role": "frontend",
+      "source_bucket": "6-10",
+      "bucket": "senior",
+      "low": 30000,
+      "high": 37000
+    },
+    {
+      "source": "IL-S6",
+      "source_role": "Frontend Developer",
+      "role": "frontend",
+      "source_bucket": "0-2",
+      "bucket": "junior",
+      "low": 22000,
+      "high": 27000
+    },
+    {
+      "source": "IL-S6",
+      "source_role": "Frontend Developer",
+      "role": "frontend",
+      "source_bucket": "3-5",
+      "bucket": "mid",
+      "low": 27000,
+      "high": 37000
+    },
+    {
+      "source": "IL-S6",
+      "source_role": "Frontend Developer",
+      "role": "frontend",
+      "source_bucket": "6-10",
+      "bucket": "senior",
+      "low": 35000,
+      "high": 45000
+    },
+    {
+      "source": "IL-S2",
+      "source_role": "Mobile Developer",
+      "role": "mobile",
+      "source_bucket": "1-2",
+      "bucket": "junior",
+      "low": 20000,
+      "high": 25000
+    },
+    {
+      "source": "IL-S2",
+      "source_role": "Mobile Developer",
+      "role": "mobile",
+      "source_bucket": "3-5",
+      "bucket": "mid",
+      "low": 25000,
+      "high": 32000
+    },
+    {
+      "source": "IL-S2",
+      "source_role": "Mobile Developer",
+      "role": "mobile",
+      "source_bucket": "6-10",
+      "bucket": "senior",
+      "low": 32000,
+      "high": 40000
+    },
+    {
+      "source": "IL-S6",
+      "source_role": "Mobile Developer",
+      "role": "mobile",
+      "source_bucket": "0-2",
+      "bucket": "junior",
+      "low": 20000,
+      "high": 25000
+    },
+    {
+      "source": "IL-S6",
+      "source_role": "Mobile Developer",
+      "role": "mobile",
+      "source_bucket": "3-5",
+      "bucket": "mid",
+      "low": 26000,
+      "high": 33000
+    },
+    {
+      "source": "IL-S6",
+      "source_role": "Mobile Developer",
+      "role": "mobile",
+      "source_bucket": "6-10",
+      "bucket": "senior",
+      "low": 32000,
+      "high": 40000
+    },
+    {
+      "source": "IL-S15",
+      "source_role": "מפתח/ת מובייל",
+      "role": "mobile",
+      "source_bucket": "בוגר",
+      "bucket": "junior",
+      "low": 19000,
+      "high": 21000
+    },
+    {
+      "source": "IL-S15",
+      "source_role": "מפתח/ת מובייל",
+      "role": "mobile",
+      "source_bucket": "3-5",
+      "bucket": "mid",
+      "low": 30000,
+      "high": 34000
+    },
+    {
+      "source": "IL-S15",
+      "source_role": "מפתח/ת מובייל",
+      "role": "mobile",
+      "source_bucket": "מעל 5",
+      "bucket": "senior",
+      "low": 35000,
+      "high": 40000
+    },
+    {
+      "source": "IL-S3",
+      "source_role": "DevOps Engineer",
+      "role": "devops",
+      "source_bucket": "0-2",
+      "bucket": "junior",
+      "low": 16000,
+      "high": 22000
+    },
+    {
+      "source": "IL-S3",
+      "source_role": "DevOps Engineer",
+      "role": "devops",
+      "source_bucket": "3-5",
+      "bucket": "mid",
+      "low": 24000,
+      "high": 31000
+    },
+    {
+      "source": "IL-S3",
+      "source_role": "DevOps Engineer",
+      "role": "devops",
+      "source_bucket": "6+",
+      "bucket": "senior",
+      "low": 32000,
+      "high": 40000
+    },
+    {
+      "source": "IL-S6",
+      "source_role": "שכר DevOps Engineer",
+      "role": "devops",
+      "source_bucket": "0-2",
+      "bucket": "junior",
+      "low": 25000,
+      "high": 30000
+    },
+    {
+      "source": "IL-S6",
+      "source_role": "שכר DevOps Engineer",
+      "role": "devops",
+      "source_bucket": "3-5",
+      "bucket": "mid",
+      "low": 32000,
+      "high": 38000
+    },
+    {
+      "source": "IL-S6",
+      "source_role": "שכר DevOps Engineer",
+      "role": "devops",
+      "source_bucket": "6-10",
+      "bucket": "senior",
+      "low": 35000,
+      "high": 45000
+    },
+    {
+      "source": "IL-S16",
+      "source_role": "DevOps",
+      "role": "devops",
+      "source_bucket": "3-5",
+      "bucket": "mid",
+      "low": 30000,
+      "high": 32000
+    },
+    {
+      "source": "IL-S16",
+      "source_role": "DevOps",
+      "role": "devops",
+      "source_bucket": "מעל 5",
+      "bucket": "senior",
+      "low": 35000,
+      "high": 40000
+    },
+    {
+      "source": "IL-S1",
+      "source_role": "Data Scientist",
+      "role": "data_scientist",
+      "source_bucket": "1-2",
+      "bucket": "junior",
+      "low": 25000,
+      "high": 30000
+    },
+    {
+      "source": "IL-S1",
+      "source_role": "Data Scientist",
+      "role": "data_scientist",
+      "source_bucket": "3-5",
+      "bucket": "mid",
+      "low": 25000,
+      "high": 40000
+    },
+    {
+      "source": "IL-S1",
+      "source_role": "Data Scientist",
+      "role": "data_scientist",
+      "source_bucket": "6-10",
+      "bucket": "senior",
+      "low": 40000,
+      "high": 45000
+    },
+    {
+      "source": "IL-S6",
+      "source_role": "שכר Data scientist",
+      "role": "data_scientist",
+      "source_bucket": "0-2",
+      "bucket": "junior",
+      "low": 22000,
+      "high": 35000
+    },
+    {
+      "source": "IL-S6",
+      "source_role": "שכר Data scientist",
+      "role": "data_scientist",
+      "source_bucket": "3-5",
+      "bucket": "mid",
+      "low": 28000,
+      "high": 45000
+    },
+    {
+      "source": "IL-S6",
+      "source_role": "שכר Data scientist",
+      "role": "data_scientist",
+      "source_bucket": "6-10",
+      "bucket": "senior",
+      "low": 40000,
+      "high": 55000
+    },
+    {
+      "source": "IL-S1",
+      "source_role": "Data Engineer",
+      "role": "data_engineer",
+      "source_bucket": "1-2",
+      "bucket": "junior",
+      "low": 20000,
+      "high": 25000
+    },
+    {
+      "source": "IL-S1",
+      "source_role": "Data Engineer",
+      "role": "data_engineer",
+      "source_bucket": "3-5",
+      "bucket": "mid",
+      "low": 25000,
+      "high": 33000
+    },
+    {
+      "source": "IL-S1",
+      "source_role": "Data Engineer",
+      "role": "data_engineer",
+      "source_bucket": "6-10",
+      "bucket": "senior",
+      "low": 32000,
+      "high": 40000
+    },
+    {
+      "source": "IL-S6",
+      "source_role": "שכר Data Engineer",
+      "role": "data_engineer",
+      "source_bucket": "0-2",
+      "bucket": "junior",
+      "low": 20000,
+      "high": 25000
+    },
+    {
+      "source": "IL-S6",
+      "source_role": "שכר Data Engineer",
+      "role": "data_engineer",
+      "source_bucket": "3-5",
+      "bucket": "mid",
+      "low": 27000,
+      "high": 37000
+    },
+    {
+      "source": "IL-S6",
+      "source_role": "שכר Data Engineer",
+      "role": "data_engineer",
+      "source_bucket": "6-10",
+      "bucket": "senior",
+      "low": 33000,
+      "high": 43000
+    },
+    {
+      "source": "IL-S1",
+      "source_role": "Data Analyst",
+      "role": "data_analyst",
+      "source_bucket": "1-2",
+      "bucket": "junior",
+      "low": 15000,
+      "high": 20000
+    },
+    {
+      "source": "IL-S1",
+      "source_role": "Data Analyst",
+      "role": "data_analyst",
+      "source_bucket": "3-5",
+      "bucket": "mid",
+      "low": 20000,
+      "high": 25000
+    },
+    {
+      "source": "IL-S1",
+      "source_role": "Data Analyst",
+      "role": "data_analyst",
+      "source_bucket": "6-10",
+      "bucket": "senior",
+      "low": 25000,
+      "high": 30000
+    },
+    {
+      "source": "IL-S6",
+      "source_role": "שכר Data Analyst",
+      "role": "data_analyst",
+      "source_bucket": "0-2",
+      "bucket": "junior",
+      "low": 20000,
+      "high": 25000
+    },
+    {
+      "source": "IL-S6",
+      "source_role": "שכר Data Analyst",
+      "role": "data_analyst",
+      "source_bucket": "3-5",
+      "bucket": "mid",
+      "low": 25000,
+      "high": 30000
+    },
+    {
+      "source": "IL-S6",
+      "source_role": "שכר Data Analyst",
+      "role": "data_analyst",
+      "source_bucket": "6-10",
+      "bucket": "senior",
+      "low": 28000,
+      "high": 32000
+    },
+    {
+      "source": "IL-S2",
+      "source_role": "QA Engineer",
+      "role": "qa",
+      "source_bucket": "1-2",
+      "bucket": "junior",
+      "low": 15000,
+      "high": 18000
+    },
+    {
+      "source": "IL-S2",
+      "source_role": "QA Engineer",
+      "role": "qa",
+      "source_bucket": "3-5",
+      "bucket": "mid",
+      "low": 20000,
+      "high": 25000
+    },
+    {
+      "source": "IL-S2",
+      "source_role": "QA Engineer",
+      "role": "qa",
+      "source_bucket": "6-10",
+      "bucket": "senior",
+      "low": 24000,
+      "high": 30000
+    },
+    {
+      "source": "IL-S6",
+      "source_role": "שכר בתחום ה QA",
+      "role": "qa",
+      "source_bucket": "0-2",
+      "bucket": "junior",
+      "low": 12000,
+      "high": 15000
+    },
+    {
+      "source": "IL-S6",
+      "source_role": "שכר בתחום ה QA",
+      "role": "qa",
+      "source_bucket": "3-5",
+      "bucket": "mid",
+      "low": 15000,
+      "high": 25000
+    },
+    {
+      "source": "IL-S6",
+      "source_role": "שכר בתחום ה QA",
+      "role": "qa",
+      "source_bucket": "6-10",
+      "bucket": "senior",
+      "low": 23000,
+      "high": 30000
+    },
+    {
+      "source": "IL-S6",
+      "source_role": "שכר מפתח אוטומציה",
+      "role": "qa",
+      "source_bucket": "0-2",
+      "bucket": "junior",
+      "low": 18000,
+      "high": 25000
+    },
+    {
+      "source": "IL-S6",
+      "source_role": "שכר מפתח אוטומציה",
+      "role": "qa",
+      "source_bucket": "3-5",
+      "bucket": "mid",
+      "low": 25000,
+      "high": 33000
+    },
+    {
+      "source": "IL-S6",
+      "source_role": "שכר מפתח אוטומציה",
+      "role": "qa",
+      "source_bucket": "6-10",
+      "bucket": "senior",
+      "low": 33000,
+      "high": 38000
+    },
+    {
+      "source": "IL-S15",
+      "source_role": "בדיקות (QA)",
+      "role": "qa",
+      "source_bucket": "בוגר",
+      "bucket": "junior",
+      "low": 14000,
+      "high": 16000
+    },
+    {
+      "source": "IL-S15",
+      "source_role": "בדיקות (QA)",
+      "role": "qa",
+      "source_bucket": "3-5",
+      "bucket": "mid",
+      "low": 18000,
+      "high": 20000,
+      "note": "Printed as 20-18 and 26-22; read as low-high."
+    },
+    {
+      "source": "IL-S15",
+      "source_role": "בדיקות (QA)",
+      "role": "qa",
+      "source_bucket": "מעל 5",
+      "bucket": "senior",
+      "low": 22000,
+      "high": 26000,
+      "note": "Printed as 20-18 and 26-22; read as low-high."
+    },
+    {
+      "source": "IL-S15",
+      "source_role": "מהנדס/ת אוטומציה",
+      "role": "qa",
+      "source_bucket": "בוגר",
+      "bucket": "junior",
+      "low": 18000,
+      "high": 20000
+    },
+    {
+      "source": "IL-S15",
+      "source_role": "מהנדס/ת אוטומציה",
+      "role": "qa",
+      "source_bucket": "3-5",
+      "bucket": "mid",
+      "low": 24000,
+      "high": 27000
+    },
+    {
+      "source": "IL-S15",
+      "source_role": "מהנדס/ת אוטומציה",
+      "role": "qa",
+      "source_bucket": "מעל 5",
+      "bucket": "senior",
+      "low": 32000,
+      "high": 35000
+    },
+    {
+      "source": "IL-S4",
+      "source_role": "הגנה ותפעול (SOC, IR)",
+      "role": "security",
+      "source_bucket": "0-2",
+      "bucket": "junior",
+      "low": 12000,
+      "high": 17000
+    },
+    {
+      "source": "IL-S4",
+      "source_role": "הגנה ותפעול (SOC, IR)",
+      "role": "security",
+      "source_bucket": "3-5",
+      "bucket": "mid",
+      "low": 17000,
+      "high": 25000
+    },
+    {
+      "source": "IL-S4",
+      "source_role": "הגנה ותפעול (SOC, IR)",
+      "role": "security",
+      "source_bucket": "6+",
+      "bucket": "senior",
+      "low": 25000,
+      "high": 33000
+    },
+    {
+      "source": "IL-S4",
+      "source_role": "תקיפה ובדיקות (Pen Test, Red Team)",
+      "role": "security",
+      "source_bucket": "0-2",
+      "bucket": "junior",
+      "low": 16000,
+      "high": 21000
+    },
+    {
+      "source": "IL-S4",
+      "source_role": "תקיפה ובדיקות (Pen Test, Red Team)",
+      "role": "security",
+      "source_bucket": "3-5",
+      "bucket": "mid",
+      "low": 22000,
+      "high": 30000
+    },
+    {
+      "source": "IL-S4",
+      "source_role": "תקיפה ובדיקות (Pen Test, Red Team)",
+      "role": "security",
+      "source_bucket": "6+",
+      "bucket": "senior",
+      "low": 30000,
+      "high": 42000
+    },
+    {
+      "source": "IL-S4",
+      "source_role": "מחקר ופיתוח (חוקר פגיעויות, RE)",
+      "role": "security",
+      "source_bucket": "0-2",
+      "bucket": "junior",
+      "low": 18000,
+      "high": 24000
+    },
+    {
+      "source": "IL-S4",
+      "source_role": "מחקר ופיתוח (חוקר פגיעויות, RE)",
+      "role": "security",
+      "source_bucket": "3-5",
+      "bucket": "mid",
+      "low": 26000,
+      "high": 36000
+    },
+    {
+      "source": "IL-S4",
+      "source_role": "מחקר ופיתוח (חוקר פגיעויות, RE)",
+      "role": "security",
+      "source_bucket": "6+",
+      "bucket": "senior",
+      "low": 38000,
+      "high": 55000
+    },
+    {
+      "source": "IL-S6",
+      "source_role": "שכר מומחה אבטחת מידע",
+      "role": "security",
+      "source_bucket": "0-2",
+      "bucket": "junior",
+      "low": 20000,
+      "high": 25000
+    },
+    {
+      "source": "IL-S6",
+      "source_role": "שכר מומחה אבטחת מידע",
+      "role": "security",
+      "source_bucket": "3-5",
+      "bucket": "mid",
+      "low": 25000,
+      "high": 30000
+    },
+    {
+      "source": "IL-S6",
+      "source_role": "שכר מומחה אבטחת מידע",
+      "role": "security",
+      "source_bucket": "6-10",
+      "bucket": "senior",
+      "low": 35000,
+      "high": 48000
+    },
+    {
+      "source": "IL-S15",
+      "source_role": "Data Security Expert",
+      "role": "security",
+      "source_bucket": "3-5",
+      "bucket": "mid",
+      "low": 21000,
+      "high": 23000
+    },
+    {
+      "source": "IL-S15",
+      "source_role": "Data Security Expert",
+      "role": "security",
+      "source_bucket": "מעל 5",
+      "bucket": "senior",
+      "low": 25000,
+      "high": 28000
+    },
+    {
+      "source": "IL-S2",
+      "source_role": "Software architect",
+      "role": "architect",
+      "source_bucket": "3-5",
+      "bucket": "mid",
+      "low": 25000,
+      "high": 35000
+    },
+    {
+      "source": "IL-S2",
+      "source_role": "Software architect",
+      "role": "architect",
+      "source_bucket": "6-10",
+      "bucket": "senior",
+      "low": 35000,
+      "high": 45000
+    },
+    {
+      "source": "IL-S6",
+      "source_role": "שכר ארכיטקט תוכנה",
+      "role": "architect",
+      "source_bucket": "3-5",
+      "bucket": "mid",
+      "low": 40000,
+      "high": 43000,
+      "note": "Column header read literally; the source may mean years in the role.",
+      "mapping_uncertain": true
+    },
+    {
+      "source": "IL-S6",
+      "source_role": "שכר ארכיטקט תוכנה",
+      "role": "architect",
+      "source_bucket": "6-10",
+      "bucket": "senior",
+      "low": 43000,
+      "high": 45000,
+      "note": "Column header read literally; the source may mean years in the role.",
+      "mapping_uncertain": true
+    },
+    {
+      "source": "IL-S1",
+      "source_role": "Fullstack Lead / Tech Lead",
+      "role": "team_lead",
+      "source_bucket": "Lead / Tech Lead",
+      "bucket": "senior",
+      "low": 38000,
+      "high": 48000,
+      "mapping_uncertain": true
+    },
+    {
+      "source": "IL-S6",
+      "source_role": "שכר ראש צוות פיתוח",
+      "role": "team_lead",
+      "source_bucket": "6-10",
+      "bucket": "senior",
+      "low": 43000,
+      "high": 45000,
+      "note": "Column header read literally; the source may mean years in the role.",
+      "mapping_uncertain": true
+    },
+    {
+      "source": "IL-S15",
+      "source_role": "מפתח/ת Fullstack, ראש צוות",
+      "role": "team_lead",
+      "source_bucket": "ראש צוות",
+      "bucket": "senior",
+      "low": 40000,
+      "high": 42000,
+      "mapping_uncertain": true
+    },
+    {
+      "source": "IL-S1",
+      "source_role": "Product Manager",
+      "role": "product_manager",
+      "source_bucket": "1-2",
+      "bucket": "junior",
+      "low": 13000,
+      "high": 24000
+    },
+    {
+      "source": "IL-S1",
+      "source_role": "Product Manager",
+      "role": "product_manager",
+      "source_bucket": "3-5",
+      "bucket": "mid",
+      "low": 23000,
+      "high": 31000
+    },
+    {
+      "source": "IL-S1",
+      "source_role": "Product Manager",
+      "role": "product_manager",
+      "source_bucket": "6-10",
+      "bucket": "senior",
+      "low": 24000,
+      "high": 30000
+    },
+    {
+      "source": "IL-S6",
+      "source_role": "שכר מנהל מוצר",
+      "role": "product_manager",
+      "source_bucket": "0-2",
+      "bucket": "junior",
+      "low": 23000,
+      "high": 29000
+    },
+    {
+      "source": "IL-S6",
+      "source_role": "שכר מנהל מוצר",
+      "role": "product_manager",
+      "source_bucket": "3-5",
+      "bucket": "mid",
+      "low": 28000,
+      "high": 35000
+    },
+    {
+      "source": "IL-S6",
+      "source_role": "שכר מנהל מוצר",
+      "role": "product_manager",
+      "source_bucket": "6-10",
+      "bucket": "senior",
+      "low": 33000,
+      "high": 45000
+    },
+    {
+      "source": "IL-S15",
+      "source_role": "מנהל/ת מוצר",
+      "role": "product_manager",
+      "source_bucket": "3-5",
+      "bucket": "mid",
+      "low": 25000,
+      "high": 28000
+    },
+    {
+      "source": "IL-S15",
+      "source_role": "מנהל/ת מוצר",
+      "role": "product_manager",
+      "source_bucket": "מעל 5",
+      "bucket": "senior",
+      "low": 28000,
+      "high": 30000
+    }
+  ],
+  "role_weights": {
+    "values": {
+      "fullstack": 3,
+      "backend": 3,
+      "frontend": 2,
+      "mobile": 1,
+      "devops": 2,
+      "data_scientist": 1.5,
+      "data_engineer": 1,
+      "data_analyst": 1,
+      "qa": 1.5,
+      "security": 1.5,
+      "architect": 0.5,
+      "team_lead": 1,
+      "product_manager": 1
+    },
+    "sources": [],
+    "assumption": true,
+    "notes": "No source gives role shares for these roles. Developer roles are weighted higher by choice."
+  },
+  "bucket_weights": {
+    "values": {
+      "junior": 0.3,
+      "mid": 0.4,
+      "senior": 0.3
+    },
+    "sources": [],
+    "assumption": true,
+    "notes": "No source; chosen."
+  },
+  "style_weights": {
+    "values": {
+      "update": 0.4,
+      "offer_question": 0.3,
+      "compare_offers": 0.15,
+      "question_no_salary": 0.15
+    },
+    "sources": [],
+    "assumption": true,
+    "notes": "No source; the real group is mostly questions, but most posts here must carry a salary."
+  },
+  "basis_weights": {
+    "values": {
+      "gross": 0.5,
+      "unknown": 0.5
+    },
+    "sources": [],
+    "assumption": true,
+    "notes": "No source. Net posts are not generated: converting gross to net needs a tax model we do not have."
+  },
+  "city_weights": {
+    "values": {
+      "תל אביב": 4,
+      "הרצליה": 1.5,
+      "פתח תקווה": 1.5,
+      "רמת גן": 1,
+      "חיפה": 1,
+      "ירושלים": 1,
+      "באר שבע": 0.5,
+      "none": 4
+    },
+    "sources": [],
+    "assumption": true,
+    "notes": "No source for post shares by city. Salaries are not adjusted by city."
+  },
+  "equity_share": {
+    "value": 0.25,
+    "sources": [],
+    "assumption": true,
+    "notes": "Share of employees with equity was not found in any source."
+  }
+}
