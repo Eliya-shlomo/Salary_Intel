@@ -11,6 +11,7 @@ class SalaryPost(Base):
     id: Mapped[int] = mapped_column(Integer, primary_key=True)
     raw_text: Mapped[str] = mapped_column(Text, nullable=False)
     role: Mapped[str | None] = mapped_column(String(100))
+    role_canonical: Mapped[str | None] = mapped_column(String(30), index=True)
     years_experience: Mapped[float | None] = mapped_column(Float)
     salary: Mapped[float | None] = mapped_column(Float)
     company_stage: Mapped[str | None] = mapped_column(String(50))
@@ -19,6 +20,18 @@ class SalaryPost(Base):
     source: Mapped[str | None] = mapped_column(String(100))
     post_date: Mapped[datetime | None] = mapped_column(DateTime)
     created_at: Mapped[datetime] = mapped_column(DateTime, default=datetime.utcnow)
+    salary_min: Mapped[float | None] = mapped_column(Float)
+    salary_max: Mapped[float | None] = mapped_column(Float)
+    pay_basis: Mapped[str] = mapped_column(
+        String(20), default="unknown", server_default="unknown"
+    )
+    has_equity: Mapped[bool | None] = mapped_column(Boolean)
+    bonus_included: Mapped[bool | None] = mapped_column(Boolean)
+    confidence: Mapped[float | None] = mapped_column(Float)
+    evidence: Mapped[str | None] = mapped_column(Text)
+    review_status: Mapped[str] = mapped_column(
+        String(20), default="approved", server_default="approved"
+    )
 
 
 class QueryLog(Base):

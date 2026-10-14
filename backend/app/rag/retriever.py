@@ -51,7 +51,8 @@ async def search_similar_posts(
                             ORDER BY embedding <=> CAST(:embedding AS vector)
                         ) AS rank
                     FROM salary_posts
-                    WHERE 1 - (embedding <=> CAST(:embedding AS vector)) > :threshold
+                    WHERE review_status = 'approved'
+                      AND 1 - (embedding <=> CAST(:embedding AS vector)) > :threshold
                 ),
                 keyword AS (
                     {keyword_conditions}
@@ -67,7 +68,8 @@ async def search_similar_posts(
                 )
                 SELECT
                     p.id, p.raw_text, p.role, p.years_experience,
-                    p.salary, p.location, p.company_stage,
+                    COALESCE((p.salary_min + p.salary_max) / 2, p.salary) AS salary,
+                    p.location, p.company_stage,
                     r.similarity, r.rrf_score
                 FROM rrf r
                 JOIN salary_posts p ON p.id = r.id
@@ -153,6 +155,6 @@ def _build_weighted_keyword_conditions(keywords: dict) -> str:
         FROM (
             SELECT id, ({score_expr}) AS weighted_score
             FROM salary_posts
-            WHERE ({score_expr}) > 0
+            WHERE review_status = 'approved' AND ({score_expr}) > 0
         ) scored
     """

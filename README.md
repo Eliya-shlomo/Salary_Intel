@@ -1,240 +1,265 @@
-````md
-# 🔍 Salary Intel — Hebrew AI Salary Intelligence Platform
+# Salary Intel
 
-> RAG-powered salary insights from real Israeli tech community discussions
+Salary intelligence for the Israeli tech market, built from community salary posts written in Hebrew.
 
-## What is this?
+Two things in one backend:
 
-A production-grade RAG system that answers Hebrew salary questions based on real data from Israeli tech communities.
-
-Instead of hallucinating numbers, the system retrieves actual salary posts and generates grounded answers with sources.
-
-**Example:**
+1. **A RAG question-answering endpoint** that retrieves relevant posts and answers from them (`/query`).
+2. **A multi-agent pipeline** that turns raw posts into clean, reviewable salary records, and an **Analyst agent** whose numbers are checked by deterministic code before a user sees them.
 
 ```text
-Query:  "כמה מרוויח DevOps בכיר בתל אביב?"
-Answer: "לפי 3 דיונים אמיתיים מהקהילה, DevOps עם 6+ שנים מרוויח 42,000-55,000₪..."
-Sources: [post_1, post_2, post_3]
-````
+Query:  "כמה מרוויח DevOps עם 5 שנות ניסיון?"
+Answer: "מהנדס DevOps עם 5 שנות ניסיון מרוויח בין 45,000₪ ל-55,000₪..."
+```
 
----
+## The design rule
+
+> The model reads and decides. Code does the arithmetic and the checking.
+
+Every place where a wrong number would hurt is handled by plain, tested Python instead of a model:
+
+| Job | Who does it | Why |
+|---|---|---|
+| Find the salary phrase and the job title in a post | LLM (`Extractor`) | Free-form Hebrew text |
+| Turn "62 א׳ ברוטו" into `62000`, gross | Code (`parse_amount`) | A model must never "compute" a salary |
+| Map a title to one of 14 roles | Code (`normalize_role`) | Closed list, repeatable |
+| Percentiles (p25/p50/p75) | SQL `percentile_cont` | Exact, no sampling noise |
+| Check the extraction against the post | LLM (`Critic`), answering four yes/no questions | Needs reading the post |
+| Decide approved / needs review | Code (`review_loop`) | The model cannot approve itself |
+| Check that every number in an answer exists in the tool output | Code (`Verifier`) | Catches invented numbers |
 
 ## Architecture
 
+### Ingestion: from a raw post to a record
+
+```mermaid
+flowchart TD
+    A[POST /posts] --> B{Empty?}
+    B -- yes --> X1[422]
+    B -- no --> C{Exact duplicate?<br/>normalized text}
+    C -- yes --> X2[409 duplicate]
+    C -- no --> D[Embedding<br/>text-embedding-3-small]
+    D --> E{Near duplicate?<br/>pgvector cosine}
+    E -- yes --> X2
+    E -- no --> F[Extractor agent<br/>quotes only]
+    F --> G[build_candidate<br/>parse_amount + normalize_role<br/>evidence found in post?]
+    G --> H{Salary post?}
+    H -- no --> X3[rejected 422]
+    H -- yes --> I{Evidence quote<br/>exists in post?}
+    I -- no --> F
+    I -- yes --> J[Critic agent<br/>4 yes/no checks]
+    J -- all true --> K[approved 201]
+    J -- some false, round 1 --> F
+    J -- some false, round 2 --> L[needs_review 202]
+    K --> M[(salary_posts)]
+    L --> M
+    L -.-> N[GET /review/pending<br/>approve / reject]
+```
+
+* The `Extractor` only copies text. It never produces a number.
+* A post is retried at most twice, with the `Critic`'s issues passed back as feedback.
+* Only `approved` rows are visible to `/query`, the statistics tool and the Analyst.
+* Rejecting a pending post marks it `rejected`; nothing is deleted.
+
+### Answering: the Analyst
+
+```mermaid
+flowchart TD
+    Q[POST /analyst/ask] --> A[Analyst agent]
+    A -->|ask_stats| S[Stats sub-agent]
+    A -->|ask_retriever| R[Retriever sub-agent]
+    S --> T1[salary_stats tool<br/>SQL percentiles]
+    R --> T2[search_posts tool<br/>pgvector + keywords]
+    S -->|answer + raw TOOL_DATA| A
+    R -->|answer + raw TOOL_DATA| A
+    A --> V{Verifier<br/>every number in the answer<br/>exists in TOOL_DATA<br/>or in the question?}
+    V -- yes --> OK[answer, verified: true]
+    V -- no --> NO[answer withheld,<br/>verified: false + the numbers]
+```
+
+* A sub-agent is a `create_agent` wrapped in an `@tool`. The Analyst sees a tool with a name and a description.
+* Each wrapper returns the model's text **and** the raw tool output, so the `Verifier` compares the answer against evidence the model cannot edit.
+* If verification fails, the answer is not returned at all. A wrong salary figure is worse than no figure.
+
+### Retrieval (`/query`)
+
 ```text
-User Query
-    ↓
-LLM Query Expansion     (GPT extracts role/tech/location keywords)
-    ↓
-Hybrid Search           (Semantic + Weighted Keyword Search)
-    ↓
-RRF Fusion              (Reciprocal Rank Fusion merges results)
-    ↓
-Reranking               (GPT selects top 3 most relevant)
-    ↓
-Generation              (GPT answers based on evidence only)
-    ↓
-Grounded Answer + Sources
+query -> embedding + LLM query expansion (in parallel)
+      -> hybrid search: semantic (pgvector) + weighted keywords
+      -> Reciprocal Rank Fusion
+      -> LLM rerank (top 3)
+      -> grounded answer + sources
 ```
 
-### Tech Stack
+Retrieval latency dropped from about 5.0s to 1.9s (-62%) by running the embedding and the query expansion with `asyncio.gather`. Per-stage latency and estimated cost are stored per request in `query_logs`.
 
-| Layer          | Technology                     | Why                                |
-| -------------- | ------------------------------ | ---------------------------------- |
-| API            | FastAPI                        | Async, auto docs, production-ready |
-| Database       | PostgreSQL + pgvector          | Vector search without extra infra  |
-| Embeddings     | OpenAI text-embedding-3-small  | Multilingual, cost-effective       |
-| LLM            | GPT-4o-mini                    | Fast, cheap, Hebrew support        |
-| Search         | Hybrid (Semantic + BM25-style) | Better recall than either alone    |
-| Reranking      | LLM-based                      | No cross-encoder needed for Hebrew |
-| Infrastructure | Docker Compose                 | One-command setup                  |
+## Measured results
 
----
+All numbers below come from running the code in this repository against `gpt-4o-mini` (`temperature=0`). The scripts and raw outputs are in [`backend/evals/`](backend/evals/).
 
-## Key Technical Decisions
+### Does the Critic improve the pipeline? (`python -m evals.run_ablation`)
 
-### Why RAG over Fine-tuning?
+39 labeled posts (Hebrew, written by me), the full review loop run with and without the `Critic`:
 
-Salary data changes constantly. RAG allows real-time updates without retraining. Fine-tuning would require expensive retraining for every new data point.
+| | Without Critic | With Critic |
+|---|---|---|
+| Approved automatically | 34 | 31 |
+| Sent to human review | 0 | 3 (all false alarms) |
+| Rejected as not a salary post | 5 | 5 |
+| Wrong records admitted | 0 | 0 |
+| Average time per post | 0.96s | 2.17s |
 
-### Why Hybrid Search?
+**Honest reading:** on this set the `Extractor` is already correct on all 39 posts, because the numbers come from code and the model only copies phrases. So the `Critic` has nothing to catch here, and it costs about 2x latency and 3 extra reviews. This set cannot show a benefit; it shows the `Extractor` design is solid.
 
-Semantic search alone misses exact tech keywords ("Kubernetes", "React").
-Keyword search alone misses synonyms ("מהנדס תשתיות" ≠ "DevOps").
-Hybrid with RRF fusion outperforms either approach.
+Two earlier versions of the `Critic` are kept in `evals/results/` because they taught something:
 
-### Why LLM Reranking over Cross-Encoder?
+* The original prompt (`ablation_v1_original_prompt.json`) demanded a second offer that the pipeline deliberately drops, and sent 12 of 31 correct posts to review.
+* A free-text `issues` version (`ablation_v2_free_text_critic.json`) sent 21 correct posts to review and, worse, its feedback made the `Extractor` change 5 correct answers into wrong ones. The model was marking `agrees: false` while writing "the pay basis is correct" in `issues`.
+* The fix was structural: the `Critic` now answers four yes/no questions and code derives `agrees` and the feedback text.
 
-Hebrew cross-encoder models are limited. GPT-4o-mini understands Hebrew context deeply and reranks with high accuracy at low cost.
+### Can the Critic catch errors when they exist? (`python -m evals.critic_detection`)
 
-### Why pgvector over Pinecone/Weaviate?
+Since the `Extractor` made no mistakes, I injected them: take the 34 correct extractions and corrupt one field at a time.
 
-Keeps the stack simple — one database for both relational data and vector search. Easier to maintain, lower operational cost for this scale.
+| Injected error | Caught |
+|---|---|
+| Wrong pay basis (gross <-> net) | 33 / 34 (97%) |
+| Wrong role | 34 / 34 (100%) |
+| Wrong equity flag | 22 / 34 (65%) |
+| *Clean extraction wrongly flagged* | 2 / 34 (6%) |
 
----
+The equity check is the weak spot. One attempt to reword it made things worse (11 false alarms, and the model returned `null` for a boolean), so I reverted it rather than keep tuning on the same 39 posts.
 
-## Getting Started
+### Limits of these measurements
 
-### Prerequisites
+* Single run, small set, synthetic posts written by the author. They show direction, not production accuracy.
+* The same set was used to tune the `Critic` prompt, so its numbers are optimistic.
+* The injected-error test measures detection of simple one-field corruptions, not subtle mistakes.
 
-* Docker + Docker Compose
-* OpenAI API key
+## API
 
-### Run
+All routes are under `/api/v1` and need an `X-API-Key` header, except `/health`.
+
+| Method | Path | Purpose | Rate limit |
+|---|---|---|---|
+| POST | `/query` | RAG answer with sources (snippets, not full text) | 10/min |
+| POST | `/posts` | Run the ingestion pipeline. 201 approved, 202 pending, 409 duplicate, 422 not a salary post | 5/min |
+| GET | `/review/pending` | Posts waiting for a human | 30/min |
+| POST | `/review/{id}/approve` · `/reject` | Decide a pending post | 30/min |
+| POST | `/analyst/ask` | Agent answer, returned only if every number is verified | 10/min |
+| POST | `/analyst/compare` | Place two offers against market percentiles | 30/min |
+| GET | `/stats` | Post count | 30/min |
+| GET | `/health` | 200, or 503 when the database is down | none |
+
+Swagger UI: `http://localhost:8000/docs`.
 
 ```bash
-# Clone
-git clone https://github.com/your-username/salary-intel
-cd salary-intel
-
-# Set your OpenAI key
-echo "OPENAI_API_KEY=sk-..." > .env
-
-# Start everything
-docker-compose up --build
-
-# Initialize DB (first time only)
-docker exec salary_intel_api python -m app.db.init_db
-docker exec salary_intel_api python seed_data.py
+curl -X POST http://localhost:8000/api/v1/analyst/compare \
+  -H "Content-Type: application/json" -H "X-API-Key: $API_KEY" \
+  -d '{"offers":[{"salary":40000,"role":"devops"},{"salary":47000,"role":"backend"}]}'
 ```
 
-### API
+## Getting started
 
-Swagger docs: `http://localhost:8000/docs`
+Requirements: Docker with Compose, an OpenAI API key, Node 20+ for the frontend.
 
-#### Query endpoint
+Create `.env` in the repository root:
+
+```text
+OPENAI_API_KEY=sk-...
+API_KEY=<at least 16 characters>
+```
 
 ```bash
-curl -X POST http://localhost:8000/api/v1/query \
-  -H "Content-Type: application/json" \
-  -d '{"query": "כמה מרוויח מפתח React עם 4 שנים?"}'
+./scripts/up.sh
 ```
 
-#### Response
+This builds and starts Postgres (pgvector), Redis and the API, runs the Alembic migrations, and seeds the database if it is empty. Then:
 
-```json
-{
-  "answer": "לפי הנתונים...",
-  "posts_used": 3,
-  "sources": [...]
-}
+```bash
+curl http://localhost:8000/health
 ```
 
----
+Frontend (Next.js, talks to the backend through its own server routes so the API key never reaches the browser). Create `frontend/.env.local`:
 
-## Project Structure
+```text
+API_KEY=<the same key>
+NEXT_PUBLIC_API_URL=http://localhost:8000
+```
+
+```bash
+cd frontend && npm install && npm run dev
+```
+
+### Tests and evaluations
+
+```bash
+cd backend
+python3.11 -m venv .venv
+.venv/bin/pip install -r requirements-dev.txt
+.venv/bin/python -m pytest -q
+```
+
+The tests run on a real Postgres inside a transaction that is rolled back, so they need the database from `./scripts/up.sh`. Agents are replaced with fakes in the tests; no OpenAI calls are made.
+
+```bash
+PYTHONPATH=. .venv/bin/python -m evals.run_ablation
+PYTHONPATH=. .venv/bin/python -m evals.critic_detection
+```
+
+These two call OpenAI (a few hundred `gpt-4o-mini` requests, a few cents).
+
+### Configuration
+
+| Variable | Required | Notes |
+|---|---|---|
+| `DATABASE_URL` | yes | Postgres with the `vector` extension |
+| `OPENAI_API_KEY` | yes | |
+| `API_KEY` | yes | At least 16 characters. The server will not start without it |
+| `REDIS_URL` | no | Rate limiter storage. Default `redis://localhost:6379` |
+| `ALLOWED_ORIGINS` | no | Comma-separated CORS origins. Default `http://localhost:3000` |
+
+### Deploy
+
+[`render.yaml`](render.yaml) defines the web service. Set the five variables above in Render. The container runs `alembic upgrade head` on every start, then the API.
+
+## Project structure
 
 ```text
 salary-intel/
 ├── backend/
 │   ├── app/
-│   │   ├── api/          # FastAPI routes
-│   │   ├── core/         # Config, logging, exceptions
-│   │   ├── db/           # Models, database connection
-│   │   ├── ingestion/    # Data ingestion pipeline
-│   │   └── rag/          # Embeddings, retrieval, reranking, generation
-│   ├── Dockerfile
-│   └── requirements.txt
+│   │   ├── agents/       Extractor, Critic, Analyst, sub-agents, Verifier
+│   │   ├── tools/        parse_amount, normalize_role, compute_stats, find_duplicate, compare_offers
+│   │   ├── ingestion/    candidate, review_loop, orchestrator, persist
+│   │   ├── rag/          embeddings, retriever, reranking, generation
+│   │   ├── api/          routes, pipeline_routes, analyst_routes
+│   │   └── db/           models, session
+│   ├── alembic/          schema migrations
+│   ├── evals/            labeled posts, ablation and detection scripts, raw results
+│   └── tests/            136 tests
+├── frontend/             Next.js UI and server-side proxy routes
+├── scripts/              up.sh, down.sh
 ├── docker-compose.yml
-└── README.md
+└── render.yaml
 ```
 
----
+## Data and honesty notes
 
-## RAG Pipeline Details
+* The database holds 401 posts: **396 synthetic** (`source='synthetic'`) and **5 pasted by hand** (`source='manual_paste'`). The system has not been run on a real, large corpus.
+* Every existing row has `pay_basis='unknown'`, so a gross-only or net-only filter returns `n=0` until posts arrive through the pipeline.
+* Salary statistics need at least 5 matching posts. Below that, the tools return no percentiles and say why, instead of guessing.
+* The near-duplicate similarity threshold (0.95) was not tuned.
+* `/query` returns only a 200-character snippet of each source.
 
-### 1. Query Expansion
+## Known limitations
 
-Before searching, GPT extracts structured keywords:
+* The `Verifier` checks that a number exists somewhere in the tool output, not that it belongs to the claim. "The median is 66" passes if `n=66` is in the data. It stops invented numbers, not misleading wording.
+* The equity check in the `Critic` catches about two thirds of injected errors.
+* Salaries written as Hebrew number words ("שלושים אלף") are not parsed; the pipeline expects digits.
+* An HNSW index exists on the embedding column, but at 401 rows Postgres may still choose a sequential scan.
+* The original retrieval ablation (`python -m app.ablation_study`) was not re-run during this work.
 
-```json
-{
-  "role": ["DevOps Engineer", "Senior DevOps"],
-  "tech": ["AWS", "Kubernetes", "Docker"],
-  "location": []
-}
-```
+## Tech stack
 
-### 2. Hybrid Search + RRF
-
-Two parallel searches merged via Reciprocal Rank Fusion:
-
-```text
-score = 1/(60 + rank_semantic) + 1/(60 + rank_keyword)
-```
-
-Posts appearing high in both searches get boosted scores.
-
-### 3. Weighted Keyword Matching
-
-Fields weighted by relevance to salary:
-
-* `role` match → 3 points
-* `tech` match → 2 points
-* `location` match → 0.7 point
-
-### 4. Security
-
-SQL Injection protection on all dynamic queries:
-
-```python
-def _sanitize_keyword(kw: str) -> str:
-    return re.sub(r"[^\w\s]", "", kw)[:50]
-```
-
----
-
-## Roadmap
-
-* [ ] Real data ingestion from public sources
-* [ ] Retrieval evaluation (MRR, Hit Rate)
-* [ ] Next.js frontend
-* [ ] User authentication
-* [ ] Salary trend analysis over time
-
----
-
-פתח את `README.md` בroot ומצא את הסקשן `## Key Technical Decisions`.
-
-הוסף אחריו את הסקשן הזה:
-
-````markdown
-## Performance & Observability
-
-### Query Latency Tracking
-Every query is logged to the database with per-stage latency:
-
-```sql
-SELECT query, latency_retrieval, latency_generation, latency_total, estimated_cost_usd
-FROM query_logs ORDER BY created_at DESC;
-```
-
-### Async Parallelism — Retrieval Optimization
-Embedding and query expansion previously ran sequentially (~5s retrieval).
-Converted to `asyncio.gather` to run both OpenAI calls in parallel:
-
-```python
-# Before: sequential — 5.0s
-query_embedding = get_embedding(query)
-keywords = expand_query(query)
-
-# After: parallel — 1.9s
-query_embedding, keywords = await asyncio.gather(
-    get_embedding(query),
-    expand_query(query)
-)
-```
-
-**Measured improvement:**
-
-| Metric | Before | After | Change |
-|---|---|---|---|
-| avg retrieval | 5.0s | 1.9s | -62% |
-| avg total | 6.9s | 5.1s | -26% |
-| bottleneck | retrieval | generation (GPT) | shifted |
-
-### Cost per Query
-Estimated at ~$0.000085 per query using `gpt-4o-mini`.
-Token usage tracked per query in `query_logs.tokens_used`.
-````
-
+FastAPI, SQLAlchemy, Alembic, PostgreSQL + pgvector, Redis + slowapi, LangChain 1.x (`create_agent`), OpenAI (`gpt-4o-mini`, `text-embedding-3-small`), Next.js 16, Docker Compose.

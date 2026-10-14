@@ -1,0 +1,702 @@
+{
+  "summary": {
+    "clean": {
+      "cases": 34,
+      "flagged": 2
+    },
+    "wrong_basis": {
+      "cases": 34,
+      "flagged": 33
+    },
+    "wrong_role": {
+      "cases": 34,
+      "flagged": 34
+    },
+    "wrong_equity": {
+      "cases": 34,
+      "flagged": 22
+    }
+  },
+  "rows": [
+    {
+      "id": "clean-01",
+      "kind": "clean",
+      "flagged": false
+    },
+    {
+      "id": "clean-01",
+      "kind": "wrong_basis",
+      "flagged": true
+    },
+    {
+      "id": "clean-01",
+      "kind": "wrong_role",
+      "flagged": true
+    },
+    {
+      "id": "clean-01",
+      "kind": "wrong_equity",
+      "flagged": false
+    },
+    {
+      "id": "clean-02",
+      "kind": "clean",
+      "flagged": false
+    },
+    {
+      "id": "clean-02",
+      "kind": "wrong_basis",
+      "flagged": true
+    },
+    {
+      "id": "clean-02",
+      "kind": "wrong_role",
+      "flagged": true
+    },
+    {
+      "id": "clean-02",
+      "kind": "wrong_equity",
+      "flagged": true
+    },
+    {
+      "id": "clean-03",
+      "kind": "clean",
+      "flagged": false
+    },
+    {
+      "id": "clean-03",
+      "kind": "wrong_basis",
+      "flagged": true
+    },
+    {
+      "id": "clean-03",
+      "kind": "wrong_role",
+      "flagged": true
+    },
+    {
+      "id": "clean-03",
+      "kind": "wrong_equity",
+      "flagged": false
+    },
+    {
+      "id": "clean-04",
+      "kind": "clean",
+      "flagged": false
+    },
+    {
+      "id": "clean-04",
+      "kind": "wrong_basis",
+      "flagged": true
+    },
+    {
+      "id": "clean-04",
+      "kind": "wrong_role",
+      "flagged": true
+    },
+    {
+      "id": "clean-04",
+      "kind": "wrong_equity",
+      "flagged": true
+    },
+    {
+      "id": "clean-05",
+      "kind": "clean",
+      "flagged": false
+    },
+    {
+      "id": "clean-05",
+      "kind": "wrong_basis",
+      "flagged": true
+    },
+    {
+      "id": "clean-05",
+      "kind": "wrong_role",
+      "flagged": true
+    },
+    {
+      "id": "clean-05",
+      "kind": "wrong_equity",
+      "flagged": false
+    },
+    {
+      "id": "clean-06",
+      "kind": "clean",
+      "flagged": false
+    },
+    {
+      "id": "clean-06",
+      "kind": "wrong_basis",
+      "flagged": true
+    },
+    {
+      "id": "clean-06",
+      "kind": "wrong_role",
+      "flagged": true
+    },
+    {
+      "id": "clean-06",
+      "kind": "wrong_equity",
+      "flagged": false
+    },
+    {
+      "id": "clean-07",
+      "kind": "clean",
+      "flagged": false
+    },
+    {
+      "id": "clean-07",
+      "kind": "wrong_basis",
+      "flagged": true
+    },
+    {
+      "id": "clean-07",
+      "kind": "wrong_role",
+      "flagged": true
+    },
+    {
+      "id": "clean-07",
+      "kind": "wrong_equity",
+      "flagged": false
+    },
+    {
+      "id": "clean-08",
+      "kind": "clean",
+      "flagged": false
+    },
+    {
+      "id": "clean-08",
+      "kind": "wrong_basis",
+      "flagged": true
+    },
+    {
+      "id": "clean-08",
+      "kind": "wrong_role",
+      "flagged": true
+    },
+    {
+      "id": "clean-08",
+      "kind": "wrong_equity",
+      "flagged": true
+    },
+    {
+      "id": "clean-09",
+      "kind": "clean",
+      "flagged": false
+    },
+    {
+      "id": "clean-09",
+      "kind": "wrong_basis",
+      "flagged": true
+    },
+    {
+      "id": "clean-09",
+      "kind": "wrong_role",
+      "flagged": true
+    },
+    {
+      "id": "clean-09",
+      "kind": "wrong_equity",
+      "flagged": false
+    },
+    {
+      "id": "clean-10",
+      "kind": "clean",
+      "flagged": true
+    },
+    {
+      "id": "clean-10",
+      "kind": "wrong_basis",
+      "flagged": true
+    },
+    {
+      "id": "clean-10",
+      "kind": "wrong_role",
+      "flagged": true
+    },
+    {
+      "id": "clean-10",
+      "kind": "wrong_equity",
+      "flagged": true
+    },
+    {
+      "id": "basis-01",
+      "kind": "clean",
+      "flagged": false
+    },
+    {
+      "id": "basis-01",
+      "kind": "wrong_basis",
+      "flagged": true
+    },
+    {
+      "id": "basis-01",
+      "kind": "wrong_role",
+      "flagged": true
+    },
+    {
+      "id": "basis-01",
+      "kind": "wrong_equity",
+      "flagged": false
+    },
+    {
+      "id": "basis-02",
+      "kind": "clean",
+      "flagged": false
+    },
+    {
+      "id": "basis-02",
+      "kind": "wrong_basis",
+      "flagged": false
+    },
+    {
+      "id": "basis-02",
+      "kind": "wrong_role",
+      "flagged": true
+    },
+    {
+      "id": "basis-02",
+      "kind": "wrong_equity",
+      "flagged": true
+    },
+    {
+      "id": "basis-03",
+      "kind": "clean",
+      "flagged": false
+    },
+    {
+      "id": "basis-03",
+      "kind": "wrong_basis",
+      "flagged": true
+    },
+    {
+      "id": "basis-03",
+      "kind": "wrong_role",
+      "flagged": true
+    },
+    {
+      "id": "basis-03",
+      "kind": "wrong_equity",
+      "flagged": false
+    },
+    {
+      "id": "basis-04",
+      "kind": "clean",
+      "flagged": false
+    },
+    {
+      "id": "basis-04",
+      "kind": "wrong_basis",
+      "flagged": true
+    },
+    {
+      "id": "basis-04",
+      "kind": "wrong_role",
+      "flagged": true
+    },
+    {
+      "id": "basis-04",
+      "kind": "wrong_equity",
+      "flagged": true
+    },
+    {
+      "id": "basis-05",
+      "kind": "clean",
+      "flagged": false
+    },
+    {
+      "id": "basis-05",
+      "kind": "wrong_basis",
+      "flagged": true
+    },
+    {
+      "id": "basis-05",
+      "kind": "wrong_role",
+      "flagged": true
+    },
+    {
+      "id": "basis-05",
+      "kind": "wrong_equity",
+      "flagged": false
+    },
+    {
+      "id": "two-01",
+      "kind": "clean",
+      "flagged": false
+    },
+    {
+      "id": "two-01",
+      "kind": "wrong_basis",
+      "flagged": true
+    },
+    {
+      "id": "two-01",
+      "kind": "wrong_role",
+      "flagged": true
+    },
+    {
+      "id": "two-01",
+      "kind": "wrong_equity",
+      "flagged": true
+    },
+    {
+      "id": "two-02",
+      "kind": "clean",
+      "flagged": false
+    },
+    {
+      "id": "two-02",
+      "kind": "wrong_basis",
+      "flagged": true
+    },
+    {
+      "id": "two-02",
+      "kind": "wrong_role",
+      "flagged": true
+    },
+    {
+      "id": "two-02",
+      "kind": "wrong_equity",
+      "flagged": true
+    },
+    {
+      "id": "two-03",
+      "kind": "clean",
+      "flagged": false
+    },
+    {
+      "id": "two-03",
+      "kind": "wrong_basis",
+      "flagged": true
+    },
+    {
+      "id": "two-03",
+      "kind": "wrong_role",
+      "flagged": true
+    },
+    {
+      "id": "two-03",
+      "kind": "wrong_equity",
+      "flagged": true
+    },
+    {
+      "id": "two-04",
+      "kind": "clean",
+      "flagged": false
+    },
+    {
+      "id": "two-04",
+      "kind": "wrong_basis",
+      "flagged": true
+    },
+    {
+      "id": "two-04",
+      "kind": "wrong_role",
+      "flagged": true
+    },
+    {
+      "id": "two-04",
+      "kind": "wrong_equity",
+      "flagged": true
+    },
+    {
+      "id": "equity-01",
+      "kind": "clean",
+      "flagged": false
+    },
+    {
+      "id": "equity-01",
+      "kind": "wrong_basis",
+      "flagged": true
+    },
+    {
+      "id": "equity-01",
+      "kind": "wrong_role",
+      "flagged": true
+    },
+    {
+      "id": "equity-01",
+      "kind": "wrong_equity",
+      "flagged": true
+    },
+    {
+      "id": "equity-02",
+      "kind": "clean",
+      "flagged": false
+    },
+    {
+      "id": "equity-02",
+      "kind": "wrong_basis",
+      "flagged": true
+    },
+    {
+      "id": "equity-02",
+      "kind": "wrong_role",
+      "flagged": true
+    },
+    {
+      "id": "equity-02",
+      "kind": "wrong_equity",
+      "flagged": true
+    },
+    {
+      "id": "equity-03",
+      "kind": "clean",
+      "flagged": false
+    },
+    {
+      "id": "equity-03",
+      "kind": "wrong_basis",
+      "flagged": true
+    },
+    {
+      "id": "equity-03",
+      "kind": "wrong_role",
+      "flagged": true
+    },
+    {
+      "id": "equity-03",
+      "kind": "wrong_equity",
+      "flagged": true
+    },
+    {
+      "id": "equity-04",
+      "kind": "clean",
+      "flagged": false
+    },
+    {
+      "id": "equity-04",
+      "kind": "wrong_basis",
+      "flagged": true
+    },
+    {
+      "id": "equity-04",
+      "kind": "wrong_role",
+      "flagged": true
+    },
+    {
+      "id": "equity-04",
+      "kind": "wrong_equity",
+      "flagged": true
+    },
+    {
+      "id": "tricky-01",
+      "kind": "clean",
+      "flagged": false
+    },
+    {
+      "id": "tricky-01",
+      "kind": "wrong_basis",
+      "flagged": true
+    },
+    {
+      "id": "tricky-01",
+      "kind": "wrong_role",
+      "flagged": true
+    },
+    {
+      "id": "tricky-01",
+      "kind": "wrong_equity",
+      "flagged": false
+    },
+    {
+      "id": "tricky-02",
+      "kind": "clean",
+      "flagged": false
+    },
+    {
+      "id": "tricky-02",
+      "kind": "wrong_basis",
+      "flagged": true
+    },
+    {
+      "id": "tricky-02",
+      "kind": "wrong_role",
+      "flagged": true
+    },
+    {
+      "id": "tricky-02",
+      "kind": "wrong_equity",
+      "flagged": true
+    },
+    {
+      "id": "tricky-03",
+      "kind": "clean",
+      "flagged": false
+    },
+    {
+      "id": "tricky-03",
+      "kind": "wrong_basis",
+      "flagged": true
+    },
+    {
+      "id": "tricky-03",
+      "kind": "wrong_role",
+      "flagged": true
+    },
+    {
+      "id": "tricky-03",
+      "kind": "wrong_equity",
+      "flagged": false
+    },
+    {
+      "id": "hard-01",
+      "kind": "clean",
+      "flagged": false
+    },
+    {
+      "id": "hard-01",
+      "kind": "wrong_basis",
+      "flagged": true
+    },
+    {
+      "id": "hard-01",
+      "kind": "wrong_role",
+      "flagged": true
+    },
+    {
+      "id": "hard-01",
+      "kind": "wrong_equity",
+      "flagged": true
+    },
+    {
+      "id": "hard-02",
+      "kind": "clean",
+      "flagged": false
+    },
+    {
+      "id": "hard-02",
+      "kind": "wrong_basis",
+      "flagged": true
+    },
+    {
+      "id": "hard-02",
+      "kind": "wrong_role",
+      "flagged": true
+    },
+    {
+      "id": "hard-02",
+      "kind": "wrong_equity",
+      "flagged": true
+    },
+    {
+      "id": "hard-03",
+      "kind": "clean",
+      "flagged": false
+    },
+    {
+      "id": "hard-03",
+      "kind": "wrong_basis",
+      "flagged": true
+    },
+    {
+      "id": "hard-03",
+      "kind": "wrong_role",
+      "flagged": true
+    },
+    {
+      "id": "hard-03",
+      "kind": "wrong_equity",
+      "flagged": false
+    },
+    {
+      "id": "hard-04",
+      "kind": "clean",
+      "flagged": false
+    },
+    {
+      "id": "hard-04",
+      "kind": "wrong_basis",
+      "flagged": true
+    },
+    {
+      "id": "hard-04",
+      "kind": "wrong_role",
+      "flagged": true
+    },
+    {
+      "id": "hard-04",
+      "kind": "wrong_equity",
+      "flagged": true
+    },
+    {
+      "id": "hard-05",
+      "kind": "clean",
+      "flagged": true
+    },
+    {
+      "id": "hard-05",
+      "kind": "wrong_basis",
+      "flagged": true
+    },
+    {
+      "id": "hard-05",
+      "kind": "wrong_role",
+      "flagged": true
+    },
+    {
+      "id": "hard-05",
+      "kind": "wrong_equity",
+      "flagged": true
+    },
+    {
+      "id": "hard-06",
+      "kind": "clean",
+      "flagged": false
+    },
+    {
+      "id": "hard-06",
+      "kind": "wrong_basis",
+      "flagged": true
+    },
+    {
+      "id": "hard-06",
+      "kind": "wrong_role",
+      "flagged": true
+    },
+    {
+      "id": "hard-06",
+      "kind": "wrong_equity",
+      "flagged": true
+    },
+    {
+      "id": "hard-07",
+      "kind": "clean",
+      "flagged": false
+    },
+    {
+      "id": "hard-07",
+      "kind": "wrong_basis",
+      "flagged": true
+    },
+    {
+      "id": "hard-07",
+      "kind": "wrong_role",
+      "flagged": true
+    },
+    {
+      "id": "hard-07",
+      "kind": "wrong_equity",
+      "flagged": true
+    },
+    {
+      "id": "hard-08",
+      "kind": "clean",
+      "flagged": false
+    },
+    {
+      "id": "hard-08",
+      "kind": "wrong_basis",
+      "flagged": true
+    },
+    {
+      "id": "hard-08",
+      "kind": "wrong_role",
+      "flagged": true
+    },
+    {
+      "id": "hard-08",
+      "kind": "wrong_equity",
+      "flagged": true
+    }
+  ]
+}

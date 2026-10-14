@@ -11,6 +11,16 @@ logger = get_logger(__name__)
 router = APIRouter()
 
 
+SNIPPET_CHARS = 200
+
+
+def _public_sources(sources: list[dict]) -> list[dict]:
+    return [
+        {**s, "raw_text": s["raw_text"][:SNIPPET_CHARS]} if s.get("raw_text") else s
+        for s in sources
+    ]
+
+
 class QueryRequest(BaseModel):
     query: str
 
@@ -43,6 +53,7 @@ async def query_salary(
 
     try:
         result = await answer_salary_query(body.query)
+        result["sources"] = _public_sources(result["sources"])
         return QueryResponse(**result)
 
     except SalaryIntelError as e:
@@ -62,7 +73,7 @@ async def ingest_new_post(
     api_key: str = Depends(verify_api_key)
 ):
     try:
-        post = ingest_post(**body.model_dump())
+        post = await ingest_post(**body.model_dump())
         return {"id": post.id, "message": "Saved successfully"}
 
     except SalaryIntelError as e:

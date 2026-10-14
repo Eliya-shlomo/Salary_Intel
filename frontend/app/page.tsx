@@ -1,11 +1,13 @@
 "use client";
 
 import { useState } from "react";
-import { querySalary, QueryResponse } from "@/lib/api";
+import { askAnalyst, AnalystResponse, querySalary, QueryResponse } from "@/lib/api";
 
 export default function Home() {
   const [query, setQuery] = useState("");
   const [result, setResult] = useState<QueryResponse | null>(null);
+  const [analyst, setAnalyst] = useState<AnalystResponse | null>(null);
+  const [mode, setMode] = useState<"search" | "analyst">("search");
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
@@ -15,9 +17,13 @@ export default function Home() {
     setLoading(true);
     setError(null);
     setResult(null);
+    setAnalyst(null);
     try {
-      const data = await querySalary(query);
-      setResult(data);
+      if (mode === "analyst") {
+        setAnalyst(await askAnalyst(query));
+      } else {
+        setResult(await querySalary(query));
+      }
     } catch (err) {
       setError(err instanceof Error ? err.message : "Unexpected error");
     } finally {
@@ -65,6 +71,20 @@ export default function Home() {
         <p style={{ fontSize: 17, color: "#64748b", marginBottom: 36, lineHeight: 1.6 }}>
           תובנות שכר חכמות מבוססות AI — ממאות דיונים אמיתיים בקהילת ההייטק הישראלית
         </p>
+
+        {/* Mode toggle */}
+        <div style={{ display: "inline-flex", gap: 4, background: "white", border: "1px solid rgba(99,102,241,0.2)", borderRadius: 14, padding: 4, marginBottom: 16 }}>
+          {([["search", "חיפוש"], ["analyst", "אנליסט מאומת"]] as const).map(([value, label]) => (
+            <button
+              key={value}
+              type="button"
+              onClick={() => setMode(value)}
+              style={{ padding: "6px 16px", borderRadius: 10, border: "none", cursor: "pointer", fontSize: 13, fontWeight: 600, background: mode === value ? "linear-gradient(135deg, #6366f1, #3b82f6)" : "transparent", color: mode === value ? "white" : "#6366f1" }}
+            >
+              {label}
+            </button>
+          ))}
+        </div>
 
         {/* Search box */}
         <form onSubmit={handleSubmit}>
@@ -119,6 +139,20 @@ export default function Home() {
           <div style={{ textAlign: "center", padding: "64px 0" }}>
             <div style={{ width: 48, height: 48, borderRadius: "50%", background: "conic-gradient(from 0deg, #6366f1, #3b82f6, #e0e7ff)", animation: "spin 1s linear infinite", margin: "0 auto 16px" }} />
             <p style={{ color: "#94a3b8", fontSize: 14 }}>מחפש בנתוני הקהילה...</p>
+          </div>
+        )}
+
+        {analyst && (
+          <div style={{ background: "linear-gradient(135deg, #ffffff 0%, #f5f3ff 100%)", border: "1.5px solid rgba(99,102,241,0.15)", borderRadius: 20, padding: 28, boxShadow: "0 8px 32px rgba(99,102,241,0.08)" }}>
+            <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", marginBottom: 16 }}>
+              <span style={{ fontWeight: 700, fontSize: 16, color: "#1e1b4b" }}>תשובת האנליסט</span>
+              <span style={{ fontSize: 12, borderRadius: 20, padding: "4px 12px", color: analyst.verified ? "#15803d" : "#b45309", background: analyst.verified ? "#f0fdf4" : "#fffbeb", border: `1px solid ${analyst.verified ? "#bbf7d0" : "#fde68a"}` }}>
+                {analyst.verified ? "המספרים אומתו מול הנתונים" : "לא אומת"}
+              </span>
+            </div>
+            <p style={{ color: "#334155", lineHeight: 1.8, fontSize: 15, whiteSpace: "pre-wrap" }}>
+              {analyst.verified ? analyst.answer : "התשובה הוסתרה כי היא כללה מספרים שלא נמצאו בנתונים. נסו לנסח את השאלה מחדש."}
+            </p>
           </div>
         )}
 

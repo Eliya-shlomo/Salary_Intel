@@ -40,7 +40,7 @@ async def seed(include_real: bool = False) -> None:
         from app.ingestion.real_data import REAL_POSTS
 
         print(f"\nbulk ingesting {len(REAL_POSTS)} real posts (LLM extraction)...")
-        print(await bulk_ingest(REAL_POSTS, source="facebook"))
+        print(await bulk_ingest(REAL_POSTS, source="manual_paste"))
 
     print(f"\ndone - {count_posts()} posts in the database")
 

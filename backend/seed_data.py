@@ -1,3 +1,4 @@
+import asyncio
 import sys
 sys.path.append(".")
 
@@ -6,7 +7,7 @@ from app.ingestion.sample_data import SAMPLE_POSTS
 from app.db.database import SessionLocal
 from app.db.models import SalaryPost
 
-def seed():
+async def seed():
     db = SessionLocal()
     try:
         count = db.query(SalaryPost).count()
@@ -18,10 +19,10 @@ def seed():
 
     print(f"מכניס {len(SAMPLE_POSTS)} פוסטים...")
     for i, post in enumerate(SAMPLE_POSTS):
-        result = ingest_post(**post)
+        result = await ingest_post(**post)
         print(f"✓ [{i+1}] {result.role} — {result.salary}₪  (id: {result.id})")
 
     print("\n✓ הכל נשמר במסד")
 
 if __name__ == "__main__":
-    seed()
+    asyncio.run(seed())

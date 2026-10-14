@@ -4,7 +4,7 @@ from app.core.logging import get_logger
 logger = get_logger(__name__)
 
 
-async def bulk_ingest(posts: list[str], source: str = "facebook") -> dict:
+async def bulk_ingest(posts: list[str], source: str = "manual_paste") -> dict:
     """
     Ingests a list of raw posts with automatic metadata extraction.
     """

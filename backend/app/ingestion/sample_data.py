@@ -6,7 +6,7 @@ SAMPLE_POSTS = [
         "salary": 28000,
         "company_stage": "Series B",
         "location": "תל אביב",
-        "source": "facebook",
+        "source": "manual_paste",
     },
     {
         "raw_text": "עדכון שכר לקהילה: DevOps עם 6 שנים, חברה פיננסית גדולה, מרכז. 42K + בונוס שנתי. שוק מאוד חזק כרגע.",
@@ -15,7 +15,7 @@ SAMPLE_POSTS = [
         "salary": 42000,
         "company_stage": "Enterprise",
         "location": "מרכז",
-        "source": "facebook",
+        "source": "manual_paste",
     },
     {
         "raw_text": "Team Lead בחברת פינטק, 8 שנות ניסיון, 3 שנים ניהול. מקבל 55K כולל רכב. תל אביב.",
@@ -24,7 +24,7 @@ SAMPLE_POSTS = [
         "salary": 55000,
         "company_stage": "Fintech",
         "location": "תל אביב",
-        "source": "facebook",
+        "source": "manual_paste",
     },
     {
         "raw_text": "Data Scientist ג׳וניור, שנה וחצי ניסיון, חברת SaaS. מציעים לי 22K. זה בסדר לג׳וניור?",
@@ -33,7 +33,7 @@ SAMPLE_POSTS = [
         "salary": 22000,
         "company_stage": "SaaS",
         "location": "תל אביב",
-        "source": "facebook",
+        "source": "manual_paste",
     },
     {
         "raw_text": "Backend Python, 5 שנים, חברת אינטרנט בינונית, רמת גן. 34K. עוברים ל-FastAPI, מאוד מרוצה מהסביבה.",
@@ -42,6 +42,6 @@ SAMPLE_POSTS = [
         "salary": 34000,
         "company_stage": "Growth",
         "location": "רמת גן",
-        "source": "facebook",
+        "source": "manual_paste",
     },
 ]

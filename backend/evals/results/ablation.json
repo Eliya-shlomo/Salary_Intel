@@ -1,0 +1,658 @@
+{
+  "with_critic": {
+    "summary": {
+      "cases": 39,
+      "approved": 31,
+      "approved_wrong": 0,
+      "needs_review": 3,
+      "review_were_wrong": 0,
+      "review_false_alarms": 3,
+      "rejected": 5,
+      "total_wrong": 0,
+      "avg_seconds": 2.17,
+      "avg_rounds": 1.1
+    },
+    "rows": [
+      {
+        "id": "clean-01",
+        "category": "clean",
+        "status": "approved",
+        "rounds": 1,
+        "correct": true,
+        "seconds": 2.27
+      },
+      {
+        "id": "clean-02",
+        "category": "clean",
+        "status": "approved",
+        "rounds": 1,
+        "correct": true,
+        "seconds": 2.14
+      },
+      {
+        "id": "clean-03",
+        "category": "clean",
+        "status": "approved",
+        "rounds": 1,
+        "correct": true,
+        "seconds": 2.08
+      },
+      {
+        "id": "clean-04",
+        "category": "clean",
+        "status": "approved",
+        "rounds": 1,
+        "correct": true,
+        "seconds": 2.2
+      },
+      {
+        "id": "clean-05",
+        "category": "clean",
+        "status": "approved",
+        "rounds": 1,
+        "correct": true,
+        "seconds": 2.21
+      },
+      {
+        "id": "clean-06",
+        "category": "clean",
+        "status": "approved",
+        "rounds": 1,
+        "correct": true,
+        "seconds": 2.26
+      },
+      {
+        "id": "clean-07",
+        "category": "clean",
+        "status": "approved",
+        "rounds": 1,
+        "correct": true,
+        "seconds": 2.06
+      },
+      {
+        "id": "clean-08",
+        "category": "clean",
+        "status": "approved",
+        "rounds": 1,
+        "correct": true,
+        "seconds": 2.22
+      },
+      {
+        "id": "clean-09",
+        "category": "clean",
+        "status": "approved",
+        "rounds": 1,
+        "correct": true,
+        "seconds": 1.88
+      },
+      {
+        "id": "clean-10",
+        "category": "clean",
+        "status": "needs_review",
+        "rounds": 2,
+        "correct": true,
+        "seconds": 4.11
+      },
+      {
+        "id": "basis-01",
+        "category": "basis",
+        "status": "approved",
+        "rounds": 1,
+        "correct": true,
+        "seconds": 2.06
+      },
+      {
+        "id": "basis-02",
+        "category": "basis",
+        "status": "approved",
+        "rounds": 1,
+        "correct": true,
+        "seconds": 1.93
+      },
+      {
+        "id": "basis-03",
+        "category": "basis",
+        "status": "approved",
+        "rounds": 1,
+        "correct": true,
+        "seconds": 2.17
+      },
+      {
+        "id": "basis-04",
+        "category": "basis",
+        "status": "approved",
+        "rounds": 1,
+        "correct": true,
+        "seconds": 2.21
+      },
+      {
+        "id": "basis-05",
+        "category": "basis",
+        "status": "approved",
+        "rounds": 1,
+        "correct": true,
+        "seconds": 2.47
+      },
+      {
+        "id": "two-01",
+        "category": "two_offers",
+        "status": "approved",
+        "rounds": 1,
+        "correct": true,
+        "seconds": 2.26
+      },
+      {
+        "id": "two-02",
+        "category": "two_offers",
+        "status": "approved",
+        "rounds": 1,
+        "correct": true,
+        "seconds": 2.03
+      },
+      {
+        "id": "two-03",
+        "category": "two_offers",
+        "status": "approved",
+        "rounds": 1,
+        "correct": true,
+        "seconds": 2.07
+      },
+      {
+        "id": "two-04",
+        "category": "two_offers",
+        "status": "approved",
+        "rounds": 1,
+        "correct": true,
+        "seconds": 2.09
+      },
+      {
+        "id": "equity-01",
+        "category": "equity",
+        "status": "approved",
+        "rounds": 1,
+        "correct": true,
+        "seconds": 2.18
+      },
+      {
+        "id": "equity-02",
+        "category": "equity",
+        "status": "approved",
+        "rounds": 1,
+        "correct": true,
+        "seconds": 2.02
+      },
+      {
+        "id": "equity-03",
+        "category": "equity",
+        "status": "approved",
+        "rounds": 1,
+        "correct": true,
+        "seconds": 2.1
+      },
+      {
+        "id": "equity-04",
+        "category": "equity",
+        "status": "approved",
+        "rounds": 1,
+        "correct": true,
+        "seconds": 2.03
+      },
+      {
+        "id": "nosal-01",
+        "category": "not_salary",
+        "status": "rejected",
+        "rounds": 1,
+        "correct": true,
+        "seconds": 0.79
+      },
+      {
+        "id": "nosal-02",
+        "category": "not_salary",
+        "status": "rejected",
+        "rounds": 1,
+        "correct": true,
+        "seconds": 0.92
+      },
+      {
+        "id": "nosal-03",
+        "category": "not_salary",
+        "status": "rejected",
+        "rounds": 1,
+        "correct": true,
+        "seconds": 0.92
+      },
+      {
+        "id": "nosal-04",
+        "category": "not_salary",
+        "status": "rejected",
+        "rounds": 1,
+        "correct": true,
+        "seconds": 0.96
+      },
+      {
+        "id": "nosal-05",
+        "category": "not_salary",
+        "status": "rejected",
+        "rounds": 1,
+        "correct": true,
+        "seconds": 0.81
+      },
+      {
+        "id": "tricky-01",
+        "category": "tricky",
+        "status": "approved",
+        "rounds": 1,
+        "correct": true,
+        "seconds": 1.85
+      },
+      {
+        "id": "tricky-02",
+        "category": "tricky",
+        "status": "approved",
+        "rounds": 1,
+        "correct": true,
+        "seconds": 2.19
+      },
+      {
+        "id": "tricky-03",
+        "category": "tricky",
+        "status": "approved",
+        "rounds": 1,
+        "correct": true,
+        "seconds": 2.17
+      },
+      {
+        "id": "hard-01",
+        "category": "hard",
+        "status": "approved",
+        "rounds": 2,
+        "correct": true,
+        "seconds": 4.23
+      },
+      {
+        "id": "hard-02",
+        "category": "hard",
+        "status": "approved",
+        "rounds": 1,
+        "correct": true,
+        "seconds": 3.13
+      },
+      {
+        "id": "hard-03",
+        "category": "hard",
+        "status": "approved",
+        "rounds": 1,
+        "correct": true,
+        "seconds": 2.04
+      },
+      {
+        "id": "hard-04",
+        "category": "hard",
+        "status": "approved",
+        "rounds": 1,
+        "correct": true,
+        "seconds": 1.89
+      },
+      {
+        "id": "hard-05",
+        "category": "hard",
+        "status": "needs_review",
+        "rounds": 2,
+        "correct": true,
+        "seconds": 4.02
+      },
+      {
+        "id": "hard-06",
+        "category": "hard",
+        "status": "approved",
+        "rounds": 1,
+        "correct": true,
+        "seconds": 1.75
+      },
+      {
+        "id": "hard-07",
+        "category": "hard",
+        "status": "approved",
+        "rounds": 1,
+        "correct": true,
+        "seconds": 1.86
+      },
+      {
+        "id": "hard-08",
+        "category": "hard",
+        "status": "needs_review",
+        "rounds": 2,
+        "correct": true,
+        "seconds": 4.1
+      }
+    ]
+  },
+  "without_critic": {
+    "summary": {
+      "cases": 39,
+      "approved": 34,
+      "approved_wrong": 0,
+      "needs_review": 0,
+      "review_were_wrong": 0,
+      "review_false_alarms": 0,
+      "rejected": 5,
+      "total_wrong": 0,
+      "avg_seconds": 0.96,
+      "avg_rounds": 1.0
+    },
+    "rows": [
+      {
+        "id": "clean-01",
+        "category": "clean",
+        "status": "approved",
+        "rounds": 1,
+        "correct": true,
+        "seconds": 0.91
+      },
+      {
+        "id": "clean-02",
+        "category": "clean",
+        "status": "approved",
+        "rounds": 1,
+        "correct": true,
+        "seconds": 1.08
+      },
+      {
+        "id": "clean-03",
+        "category": "clean",
+        "status": "approved",
+        "rounds": 1,
+        "correct": true,
+        "seconds": 0.99
+      },
+      {
+        "id": "clean-04",
+        "category": "clean",
+        "status": "approved",
+        "rounds": 1,
+        "correct": true,
+        "seconds": 0.92
+      },
+      {
+        "id": "clean-05",
+        "category": "clean",
+        "status": "approved",
+        "rounds": 1,
+        "correct": true,
+        "seconds": 0.88
+      },
+      {
+        "id": "clean-06",
+        "category": "clean",
+        "status": "approved",
+        "rounds": 1,
+        "correct": true,
+        "seconds": 1.03
+      },
+      {
+        "id": "clean-07",
+        "category": "clean",
+        "status": "approved",
+        "rounds": 1,
+        "correct": true,
+        "seconds": 1.0
+      },
+      {
+        "id": "clean-08",
+        "category": "clean",
+        "status": "approved",
+        "rounds": 1,
+        "correct": true,
+        "seconds": 0.99
+      },
+      {
+        "id": "clean-09",
+        "category": "clean",
+        "status": "approved",
+        "rounds": 1,
+        "correct": true,
+        "seconds": 0.92
+      },
+      {
+        "id": "clean-10",
+        "category": "clean",
+        "status": "approved",
+        "rounds": 1,
+        "correct": true,
+        "seconds": 0.85
+      },
+      {
+        "id": "basis-01",
+        "category": "basis",
+        "status": "approved",
+        "rounds": 1,
+        "correct": true,
+        "seconds": 0.92
+      },
+      {
+        "id": "basis-02",
+        "category": "basis",
+        "status": "approved",
+        "rounds": 1,
+        "correct": true,
+        "seconds": 0.92
+      },
+      {
+        "id": "basis-03",
+        "category": "basis",
+        "status": "approved",
+        "rounds": 1,
+        "correct": true,
+        "seconds": 1.02
+      },
+      {
+        "id": "basis-04",
+        "category": "basis",
+        "status": "approved",
+        "rounds": 1,
+        "correct": true,
+        "seconds": 0.91
+      },
+      {
+        "id": "basis-05",
+        "category": "basis",
+        "status": "approved",
+        "rounds": 1,
+        "correct": true,
+        "seconds": 0.98
+      },
+      {
+        "id": "two-01",
+        "category": "two_offers",
+        "status": "approved",
+        "rounds": 1,
+        "correct": true,
+        "seconds": 0.95
+      },
+      {
+        "id": "two-02",
+        "category": "two_offers",
+        "status": "approved",
+        "rounds": 1,
+        "correct": true,
+        "seconds": 0.94
+      },
+      {
+        "id": "two-03",
+        "category": "two_offers",
+        "status": "approved",
+        "rounds": 1,
+        "correct": true,
+        "seconds": 1.08
+      },
+      {
+        "id": "two-04",
+        "category": "two_offers",
+        "status": "approved",
+        "rounds": 1,
+        "correct": true,
+        "seconds": 0.94
+      },
+      {
+        "id": "equity-01",
+        "category": "equity",
+        "status": "approved",
+        "rounds": 1,
+        "correct": true,
+        "seconds": 0.91
+      },
+      {
+        "id": "equity-02",
+        "category": "equity",
+        "status": "approved",
+        "rounds": 1,
+        "correct": true,
+        "seconds": 0.94
+      },
+      {
+        "id": "equity-03",
+        "category": "equity",
+        "status": "approved",
+        "rounds": 1,
+        "correct": true,
+        "seconds": 0.91
+      },
+      {
+        "id": "equity-04",
+        "category": "equity",
+        "status": "approved",
+        "rounds": 1,
+        "correct": true,
+        "seconds": 0.98
+      },
+      {
+        "id": "nosal-01",
+        "category": "not_salary",
+        "status": "rejected",
+        "rounds": 1,
+        "correct": true,
+        "seconds": 0.81
+      },
+      {
+        "id": "nosal-02",
+        "category": "not_salary",
+        "status": "rejected",
+        "rounds": 1,
+        "correct": true,
+        "seconds": 0.95
+      },
+      {
+        "id": "nosal-03",
+        "category": "not_salary",
+        "status": "rejected",
+        "rounds": 1,
+        "correct": true,
+        "seconds": 0.74
+      },
+      {
+        "id": "nosal-04",
+        "category": "not_salary",
+        "status": "rejected",
+        "rounds": 1,
+        "correct": true,
+        "seconds": 0.85
+      },
+      {
+        "id": "nosal-05",
+        "category": "not_salary",
+        "status": "rejected",
+        "rounds": 1,
+        "correct": true,
+        "seconds": 0.9
+      },
+      {
+        "id": "tricky-01",
+        "category": "tricky",
+        "status": "approved",
+        "rounds": 1,
+        "correct": true,
+        "seconds": 0.94
+      },
+      {
+        "id": "tricky-02",
+        "category": "tricky",
+        "status": "approved",
+        "rounds": 1,
+        "correct": true,
+        "seconds": 1.21
+      },
+      {
+        "id": "tricky-03",
+        "category": "tricky",
+        "status": "approved",
+        "rounds": 1,
+        "correct": true,
+        "seconds": 1.05
+      },
+      {
+        "id": "hard-01",
+        "category": "hard",
+        "status": "approved",
+        "rounds": 1,
+        "correct": true,
+        "seconds": 1.01
+      },
+      {
+        "id": "hard-02",
+        "category": "hard",
+        "status": "approved",
+        "rounds": 1,
+        "correct": true,
+        "seconds": 0.93
+      },
+      {
+        "id": "hard-03",
+        "category": "hard",
+        "status": "approved",
+        "rounds": 1,
+        "correct": true,
+        "seconds": 0.94
+      },
+      {
+        "id": "hard-04",
+        "category": "hard",
+        "status": "approved",
+        "rounds": 1,
+        "correct": true,
+        "seconds": 0.96
+      },
+      {
+        "id": "hard-05",
+        "category": "hard",
+        "status": "approved",
+        "rounds": 1,
+        "correct": true,
+        "seconds": 0.99
+      },
+      {
+        "id": "hard-06",
+        "category": "hard",
+        "status": "approved",
+        "rounds": 1,
+        "correct": true,
+        "seconds": 0.89
+      },
+      {
+        "id": "hard-07",
+        "category": "hard",
+        "status": "approved",
+        "rounds": 1,
+        "correct": true,
+        "seconds": 1.17
+      },
+      {
+        "id": "hard-08",
+        "category": "hard",
+        "status": "approved",
+        "rounds": 1,
+        "correct": true,
+        "seconds": 0.96
+      }
+    ]
+  }
+}

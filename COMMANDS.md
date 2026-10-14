@@ -125,3 +125,43 @@ Deletes the postgres volume and every ingested post.
 `generated_test_cases.json` points at those ids, so the ablation study breaks
 until you re-seed and regenerate. Use `./scripts/down.sh --wipe` instead — it
 makes you confirm.
+
+---
+
+## Agents, tests and measurements
+
+```bash
+cd backend && .venv/bin/python -m pytest -q
+```
+
+```bash
+cd backend && PYTHONPATH=. .venv/bin/python -m evals.run_ablation
+```
+
+```bash
+cd backend && PYTHONPATH=. .venv/bin/python -m evals.critic_detection
+```
+
+The last two call OpenAI. Results are written to `backend/evals/results/`.
+
+### Migrations
+
+```bash
+cd backend && .venv/bin/alembic upgrade head
+```
+
+The API container runs this on every start.
+
+### Review queue and the Analyst
+
+```bash
+curl -s -H "X-API-Key: $(grep -m1 '^API_KEY=' .env | cut -d= -f2-)" http://localhost:8000/api/v1/review/pending
+```
+
+```bash
+curl -s -X POST http://localhost:8000/api/v1/analyst/ask -H 'Content-Type: application/json' -H "X-API-Key: $(grep -m1 '^API_KEY=' .env | cut -d= -f2-)" -d '{"question":"מה השכר החציוני של מהנדס devops?"}'
+```
+
+### Frontend needs its own key
+
+`frontend/.env.local` must contain `API_KEY` (same value as the root `.env`) and `NEXT_PUBLIC_API_URL`. The key has no `NEXT_PUBLIC_` prefix on purpose: it stays on the Next.js server.
