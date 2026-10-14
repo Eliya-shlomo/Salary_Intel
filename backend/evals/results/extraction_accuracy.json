@@ -1,0 +1,55 @@
+{
+  "outcomes": {
+    "salary post approved": 312,
+    "question rejected": 65,
+    "salary post pending": 20,
+    "salary post rejected": 3
+  },
+  "scored": 332,
+  "accuracy": {
+    "role": 1.0,
+    "salary": 0.9909638554216867,
+    "pay_basis": 1.0,
+    "has_equity": 0.9939759036144579,
+    "years_experience": 0.9969879518072289
+  },
+  "all_fields_correct": 0.9819277108433735,
+  "misses": [
+    {
+      "id": "syn2-0029",
+      "wrong": [
+        "has_equity"
+      ]
+    },
+    {
+      "id": "syn2-0197",
+      "wrong": [
+        "salary"
+      ]
+    },
+    {
+      "id": "syn2-0201",
+      "wrong": [
+        "salary"
+      ]
+    },
+    {
+      "id": "syn2-0215",
+      "wrong": [
+        "has_equity"
+      ]
+    },
+    {
+      "id": "syn2-0345",
+      "wrong": [
+        "years_experience"
+      ]
+    },
+    {
+      "id": "syn2-0362",
+      "wrong": [
+        "salary"
+      ]
+    }
+  ]
+}

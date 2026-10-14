@@ -1,0 +1,9 @@
+{
+  "reference_version": "2026-10-14",
+  "accepted": 400,
+  "attempts": 458,
+  "rejected": {
+    "missing phrase": 52,
+    "equity mention does not match": 6
+  }
+}
